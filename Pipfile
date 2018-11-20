@@ -5,8 +5,20 @@ name = "pypi"
 
 [packages]
 django = "*"
+argparse = "*"
+uwsgi = "*"
+"boto3" = "*"
+django-cors-headers = "*"
+"beautifulsoup4" = "*"
+"psycopg2-binary" = "*"
+django-storages = "*"
+raven = "*"
 
 [dev-packages]
+django-extensions = "*"
+jupyter = "*"
+ipython = "*"
+awsebcli = "*"
 
 [requires]
 python_version = "3.6"
