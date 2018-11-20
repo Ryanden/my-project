@@ -1,14 +1,12 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager as DjangoUserManager
 from django.db import models
 
 
+class UserManager(DjangoUserManager):
+    pass
+
+
 class User(AbstractUser):
-    img_profile = models.ImageField(
-        upload_to='user',
-        default='user/blank_user.png'
-    )
+    img_profile = models.ImageField(upload_to='user', blank=True)
 
-    nickname = models.CharField(max_length=16)
-
-    def __str__(self):
-        return self.username
+    objects = UserManager()

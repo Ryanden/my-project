@@ -1,19 +1,16 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.hashers import make_password, check_password
-import json
-import os
+from django.contrib.auth.hashers import check_password
 
 User = get_user_model()
 
 
 class SettingsBackend:
     def authenticate(self, request, username=None, password=None):
-
         login_valid = (settings.ADMIN_USERNAME == username)
-        pwd_valid = check_password(password, settings.ADMIN_PASSWORD)
+        password_valid = check_password(password, settings.ADMIN_PASSWORD)
 
-        if login_valid and pwd_valid:
+        if login_valid and password_valid:
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
@@ -29,5 +26,3 @@ class SettingsBackend:
             return User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return None
-
-
