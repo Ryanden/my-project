@@ -19,6 +19,7 @@ requests = "*"
 django-filter = "*"
 raven = "*"
 django-cors-headers = "*"
+django-filters = "*"
 
 [dev-packages]
 django-extensions = "*"

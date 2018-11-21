@@ -87,13 +87,6 @@ REST_FRAMEWORK = {
 
 INSTALLED_APPS = [
     'members',
-    'rest_framework',
-    'rest_framework.authtoken',
-    # 'django_filters',
-
-    'raven.contrib.django.raven_compat',
-
-    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -101,6 +94,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    # 'django_filters',
+    'raven.contrib.django.raven_compat',
+    'corsheaders',
 ]
 
 # Raven
