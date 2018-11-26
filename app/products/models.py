@@ -39,7 +39,7 @@ class Store(models.Model):
     )
 
     def __str__(self):
-        return self.product_name
+        return self.store_name
 
     class Meta:
         ordering = ['-pk']
@@ -108,11 +108,15 @@ class Product(models.Model):
         Store,
         blank=True,
         on_delete=models.CASCADE,
-        related_name='rewards'
+        related_name='products'
     )
 
     def __str__(self):
         return f'{self.product_name}'
+
+    @property
+    def store_name(self):
+        return f'{self.store.store_name}'
 
 
 class OrderingInfo(models.Model):
@@ -152,52 +156,3 @@ class Ordering(models.Model):
     )
 
     reward_amount = models.PositiveIntegerField(default=1)
-
-
-class Comment(models.Model):
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE,
-        related_name='comments',
-    )
-
-    parent_comment = models.ForeignKey(
-        'self',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='comments'
-    )
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='comments'
-    )
-
-    contents = models.TextField()
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    modified_at = models.DateTimeField(auto_now=True)
-
-    is_deleted = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'Comment (post: {self.store.pk}, user: {self.user.username})'
-
-    @property
-    def author(self):
-        if self.is_deleted:
-            return None
-        return self.user
-
-    @property
-    def content(self):
-        if self.is_deleted:
-            return '삭제된 덧글 입니다.'
-        return self.content
-
-    def delete(self, *args, **kwargs):
-        self.is_deleted = True
-        self.save()

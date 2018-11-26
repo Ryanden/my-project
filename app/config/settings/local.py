@@ -7,6 +7,11 @@ ALLOWED_HOSTS = [
     'localhost'
 ]
 
+# django storages settings
+INSTALLED_APPS += [
+    'django_extensions'
+]
+
 # WSGI
 WSGI_APPLICATION = 'config.wsgi.local.application'
 

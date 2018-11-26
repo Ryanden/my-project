@@ -70,6 +70,7 @@ ADMIN_PASSWORD = 'pbkdf2_sha256$100000$v7w9v0l0qIlg$74DJd7Up9dfyuFYzxyi/Hh49G3ge
 AUTH_USER_MODEL = 'members.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'members.backends.FacebookBackend',
     'members.backends.SettingsBackend',
 ]
 
@@ -87,7 +88,8 @@ REST_FRAMEWORK = {
 
 INSTALLED_APPS = [
     'members',
-
+    'products',
+    'posts',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -97,7 +99,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',
-    # 'django_filters',
+    'django_filters',
     'raven.contrib.django.raven_compat',
     'corsheaders',
 ]

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Webaker</title>
+	{% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body>
+	<nav class="navbar navbar-expand navbar-light bg-light mb-3" style="border-bottom: 1px solid gray;">
+		<div class="container">
+			<a href="{% url 'index' %}" class="navbar-brand">WeBaker</a>
+			<div class="">
+				<ul class="navbar-nav ml-auto">
+					{% if user.is_authenticated %}
+					<li class="nav-item">
+						<span style="line-height:2.5;">{{ user }}</span>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'members:logout' %}">Logout</a>
+					</li>
+					<form class="form-inline">
+						<a class="btn btn-outline-primary btn-sm" href="{% url 'posts:post-create' %}">+ Add Post</a>
+					</form>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'members:login' %}">Login</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'members:signup' %}">Signup</a>
+					</li>
+					{% endif %}
+					<li class="nav-item"></li>
+				</ul>
+				</div>
+		</div>
+	</nav>
+	<div class="container mt-2">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>
+</html>
