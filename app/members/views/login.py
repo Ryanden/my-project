@@ -43,7 +43,7 @@ def login_view(request):
             if next:
                 return redirect(next)
             # next값이 전달되지 않았으면 post-list로 redirect
-            return redirect('posts:post-list')
+            return redirect('stores:store-list')
 
         # 인증에 실패한 경우 (username또는 password가 틀린 경우)
         else:

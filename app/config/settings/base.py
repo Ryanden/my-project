@@ -89,7 +89,7 @@ REST_FRAMEWORK = {
 INSTALLED_APPS = [
     'members',
     'products',
-    'posts',
+    'stores',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

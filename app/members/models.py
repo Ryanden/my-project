@@ -15,6 +15,7 @@ class User(AbstractUser):
     #     ('f', 'Facebook'),
     # )
     # user_type = models.CharField(choices=CHOICES_USER_TYPE, default='d')
+    # DEFAULT = ''
 
     user_id = models.EmailField(max_length=200)
     tel_number = models.CharField(max_length=200)

@@ -1,0 +1,16 @@
+
+<li>
+	<div>({{ comment.pk }}){{ comment.author.username }} | {{ comment.content }}</div>
+
+	<form action="{% url 'stores:child-comment-create' store_pk=store.pk comment_pk=comment.pk %}" method="POST">
+		{% csrf_token %}
+		<input type="text" name="content" placeholder="댓글을 입력하세요." class="form-control form-control-sm">
+	</form>
+	{% if comment.comments.exists %}
+	<ul>
+		{% for child_comment in comment.comments.all %}
+			{% include 'include/stores/comment.html' with comment=child_comment %}
+		{% endfor %}
+	</ul>
+	{% endif %}
+</li>

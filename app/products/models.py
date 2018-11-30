@@ -2,91 +2,64 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 from members.models import User
+from stores.models import Store
 
 
-class Store(models.Model):
-    ON = 'YA'
-    OFF = 'NA'
+# class Store(models.Model):
+#     ON = 'YA'
+#     OFF = 'NA'
+#
+#     STORE_STATUS = (
+#         (ON, 'Yes'),
+#         (OFF, 'No'),
+#     )
+#     store_name = models.CharField(max_length=100)
+#
+#     store_type = models.CharField(max_length=100)
+#
+#     store_company_name = models.CharField(max_length=100)
+#
+#     store_img = models.CharField(max_length=200)
+#
+#     store_detail_img = models.CharField(max_length=200)
+#
+#     store_interested_count = models.PositiveIntegerField(blank=True, default=0)
+#
+#     store_is_funding = models.CharField(
+#         max_length=3,
+#         choices=STORE_STATUS,
+#         default=ON
+#     )
+#
+#     store_description = models.TextField(blank=True)
+#
+#     store_like_user = models.ManyToManyField(
+#         settings.AUTH_USER_MODEL,
+#         blank=True,
+#         related_name='like_product'
+#     )
+#
+#     def __str__(self):
+#         return self.store_name
+#
+#     class Meta:
+#         ordering = ['-pk']
 
-    STORE_STATUS = (
-        (ON, 'Yes'),
-        (OFF, 'No'),
-    )
-    store_name = models.CharField(max_length=100)
 
-    store_type = models.CharField(max_length=100)
-
-    store_company_name = models.CharField(max_length=100)
-
-    store_img = models.CharField(max_length=200)
-
-    store_detail_img = models.CharField(max_length=200)
-
-    store_interested_count = models.PositiveIntegerField(blank=True, default=0)
-
-    store_is_funding = models.CharField(
-        max_length=3,
-        choices=STORE_STATUS,
-        default=ON
-    )
-
-    store_description = models.TextField(blank=True)
-
-    store_like_user = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        blank=True,
-        related_name='like_product'
-    )
-
-    def __str__(self):
-        return self.store_name
-
-    class Meta:
-        ordering = ['-pk']
-
-
-class StoreLike(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='like_products'
-    )
-
-    store = models.ForeignKey(
-        Store,
-        on_delete=models.CASCADE,
-        related_name='likes'
-    )
-
-    liked_at = models.DateTimeField(auto_now_add=True)
-
-    # @property
-    # def product_name(self):
-    #     return f'{self.product.product_name}'
-    #
-    # @property
-    # def product_type(self):
-    #     return f'{self.product.product_type}'
-    #
-    # @property
-    # def product_company_name(self):
-    #     return f'{self.product.product_company_name}'
-    #
-    # @property
-    # def product_img(self):
-    #     return f'{self.product.product_img}'
-    #
-    # @property
-    # def product_interested_count(self):
-    #     return f'{self.product.product_interested_count}'
-    #
-    # @property
-    # def product_is_funding(self):
-    #     return f'{self.product.product_is_funding}'
-    #
-    # @property
-    # def user_name(self):
-    #     return f'{self.user.username}'
+# class StoreLike(models.Model):
+#     user = models.ForeignKey(
+#         User,
+#         on_delete=models.CASCADE,
+#         related_name='like_products'
+#     )
+#
+#     store = models.ForeignKey(
+#         Store,
+#         on_delete=models.CASCADE,
+#         related_name='likes'
+#     )
+#
+#     liked_at = models.DateTimeField(auto_now_add=True)
 
 
 class Product(models.Model):
@@ -96,13 +69,7 @@ class Product(models.Model):
 
     product_price = models.PositiveIntegerField(default=0)
 
-    product_shipping_charge = models.PositiveIntegerField(default=0)
-
     product_total_count = models.PositiveIntegerField(default=0)
-
-    product_sold_count = models.PositiveIntegerField(default=0)
-
-    product_on_sale = models.BooleanField(default=True)
 
     store = models.ForeignKey(
         Store,
@@ -116,15 +83,10 @@ class Product(models.Model):
 
     @property
     def store_name(self):
-        return f'{self.store.store_name}'
+        return f'{self.store.title}'
 
 
 class OrderingInfo(models.Model):
-    username = models.CharField(max_length=20)
-
-    phone_regex = RegexValidator(regex='\d{11}',
-                                 message="Phone number must be 11 numbers")
-    phone_number = models.CharField(validators=[phone_regex], max_length=11, blank=True)
 
     address1 = models.CharField(max_length=30)
 
@@ -146,13 +108,13 @@ class Ordering(models.Model):
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
-        related_name='funding'
+        related_name='ordering'
     )
 
     ordering_info = models.ForeignKey(
         OrderingInfo,
         on_delete=models.CASCADE,
-        related_name='order'
+        related_name='ordering'
     )
 
-    reward_amount = models.PositiveIntegerField(default=1)
+    product_amount = models.PositiveIntegerField(default=1)

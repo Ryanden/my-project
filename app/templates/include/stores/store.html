@@ -1,0 +1,71 @@
+
+<div class="stores">
+	<a href="{% url 'stores:store-detail' pk=store.pk %}">
+		<div class="card mb-3" style="width:250px; float:left; margin: 0 10px;">
+			<div class="card-header">
+				<div>
+					<div class="float-left">
+						{% if store.author.img_profile %}
+						<img src="{{ store.author.img_profile.url }}"
+							 style="width: 30px;"
+							 class="rounded-circle float-left mr-1"
+							 alt="">
+						{% endif %}
+						<span>{{ store.author.username }}</span>
+						<form action="" method="POST" style="display: inline-block;">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-outline-primary btn-sm">좋아요</button>
+						</form>
+					</div>
+					<form action="{% url 'stores:store-delete' pk=store.pk %}" method="POST" class="float-right">
+						{% csrf_token %}
+						<button class="btn btn-danger btn-sm">지우기</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card-body p-0">
+				{% if store.photos %}
+				<img width="100%" src="{{ store.photos.url }}" alt="">
+				{% endif %}
+
+				{% if store.tags.exists %}
+					<div class="container p-2">
+						<div>
+							<!-- user.like_stores.all에 현재 store가 속하는지 -->
+							{% if store in user.like_stores.all %}
+							<form action="{% url 'stores:store-dislike' pk=store.pk %}"
+										method="POST">
+								{% csrf_token %}
+								<button class="btn btn-sm btn-primary">좋아요 해제</button>
+							</form>
+							{% else %}
+							<form action="{% url 'stores:store-like' pk=store.pk %}"
+										method="POST">
+								{% csrf_token %}
+								<button class="btn btn-sm btn-outline-primary">좋아요</button>
+							</form>
+							{% endif %}
+						</div>
+						<p>{{ store.content_html|safe|linebreaksbr }}</p>
+					</div>
+				{% endif %}
+				<br>
+				<p style="margin: 10px; font-size: 14px; color: gray;">{{store.company}}</p>
+				<p style="margin: 10px;">{{store.title}}</p>
+				<ul>
+					{% for comment in store.comments.all %}
+						{% include 'include/stores/comment.html' %}
+					{% endfor %}
+				</ul>
+				<div>
+					<form action="{% url 'stores:comment-create' store_pk=store.pk %}" method="POST">
+						{% csrf_token %}
+						<input type="text" name="content" placeholder="댓글입력" class="form-control">
+					</form>
+				</div>
+			</div>
+		</div>
+	</a>
+
+</div>
