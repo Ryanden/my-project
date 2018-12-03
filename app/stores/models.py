@@ -48,18 +48,6 @@ class Store(models.Model):
         )
 
 
-# class Postscript(models.Model):
-#     store = models.ForeignKey(
-#         Post,
-#         on_delete=models.CASCADE,
-#         related_name='storescripts',
-#     )
-#
-#     content = models.TextField()
-#
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-
 class HashTag(models.Model):
     name = models.CharField(max_length=20)
 

@@ -20,4 +20,6 @@ class StoreSerializer(serializers.ModelSerializer):
             'created_at',
             'tags',
             'like_users',
+            'comments',
+            'inquiries',
         )
