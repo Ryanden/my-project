@@ -15,6 +15,8 @@ class UserSerializer(serializers.ModelSerializer):
             'img_profile',
             'introduce',
             'site',
+            'like_stores',
+            'carts',
         )
 
 

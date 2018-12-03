@@ -90,6 +90,9 @@ INSTALLED_APPS = [
     'members',
     'products',
     'stores',
+    'orders',
+    'carts',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
