@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+
+	<div>
+        <a href="{% url 'costcalculator:item-register' %}" class="btn btn-primary">재료등록</a>
+        <a href="{% url 'costcalculator:calculator' %}" class="btn btn-primary">계산</a>
+
+
+        <ul style="list-style:none;">
+            {% for item in items %}
+            <li>
+                <span>이름 : {{item.name}} | </span>
+                <span>용량 : {{item.capacity}} | </span>
+                <span>가격 : {{item.cost}} | </span>
+                <span>1g당 가격 : {{item.cost_per_one}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+
+    </div>
+</div>
+{% endblock %}
+
+cost_per_one

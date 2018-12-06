@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <form class="col-sm" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="form-group float-left mr-3">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+        </div>
+        {% endfor %}
+        <div class="float-right" style="margin-top:30px;">
+            <button type="submit" class="btn btn-primary"> +</button>
+        </div>
+
+    </form>
+</div>
+<div class="row">
+
+    <table style="width:100%; margin-left:15px;">
+        <tr>
+            <th>이름</th>
+            <th>사람</th>
+            <th>용량</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{item.item}}</td>
+            <td>{{item.user}}</td>
+            <td>{{item.usage}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+<div class="row">
+    <a href="{% url 'costcalculator:calculator-menu' %}" class="btn btn-danger">돌아가기</a>
+</div>
+
+
+{% endblock %}

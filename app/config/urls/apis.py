@@ -8,4 +8,5 @@ urlpatterns = [
     path('lectures/', include('lectures.urls.apis')),
     path('carts/', include('shopping_carts.urls.apis')),
     path('orders/', include('orders.urls.apis')),
+    path('calculator/', include('costcalculator.urls.apis')),
 ]

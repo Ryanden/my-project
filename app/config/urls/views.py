@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('members/', include('members.urls.views')),
     path('products/', include('products.urls.views')),
+    path('calculator/', include('costcalculator.urls.views')),
     path('stores/', include('stores.urls.views')),
     path('', views.index, name='index')
 

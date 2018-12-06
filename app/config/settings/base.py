@@ -93,6 +93,7 @@ INSTALLED_APPS = [
     'orders',
     'shopping_carts',
     'lectures',
+    'costcalculator',
 
     'django.contrib.admin',
     'django.contrib.auth',
