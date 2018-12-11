@@ -83,13 +83,16 @@
     </table>
 </div>
 
+
 <div class="row" style="margin-top:20px;">
-    <form class="col-sm" action="{% url 'costcalculator:recipe-register' %}" method="POST"
+    {% for recipe in recipes %}
+    <form class="col-sm" action="{% url 'costcalculator:recipe-register' pk=recipe.pk %}" method="POST"
           enctype="multipart/form-data">
+        {% endfor %}
         {% csrf_token %}
         <table style="width:100%;">
             <tr>
-                <th colspan="5">나의 레시피 목록</th>
+                <th colspan="5">나의 레시피</th>
             </tr>
             <tr>
                 <th>이름</th>
@@ -109,7 +112,7 @@
                 </td>
 
                 <td>
-                    <input class="cal-input" name="prime-cost" type="text" value="{{cost}}">
+                    <input name="prime-cost" class="cal-input"  type="text" value="{{cost}}">
                 </td>
 
                 <td>
@@ -123,52 +126,6 @@
 
             </tr>
             {% endfor %}
-            <tr>
-
-                <td>
-                    <input class="cal-input" type="text" name="name" placeholder="이름">
-                </td>
-                <td>
-                    <input class="cal-input" type="text" name="price" placeholder="판매가격">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="prime-cost" type="text" value="{{cost}}">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="profit" type="text" value="0">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="margin" type="text" value="0">
-                </td>
-
-            </tr>
-
-            {% else %}
-            <tr>
-
-                <td>
-                    <input class="cal-input" type="text" name="name" placeholder="이름">
-                </td>
-                <td>
-                    <input class="cal-input" type="text" name="price" placeholder="판매가격">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="prime-cost" type="text" value="{{cost}}">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="profit" type="text" value="0">
-                </td>
-
-                <td>
-                    <input class="cal-input" name="margin" type="text" value="0">
-                </td>
-
-            </tr>
 
             {% endif %}
 
@@ -178,6 +135,7 @@
         </div>
     </form>
 </div>
+
 
 
 <div class="row mt-3" style="margin:0; margin-top:10px;">

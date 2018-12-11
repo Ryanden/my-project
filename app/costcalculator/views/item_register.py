@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from ..forms import ItemRegisterModelForm, ItemRegisterForm
+from ..forms import ItemRegisterForm
 
 __all__ = (
     'item_register',
@@ -9,16 +9,15 @@ __all__ = (
 
 
 def item_register(request):
-
     if request.method == 'POST':
-        form = ItemRegisterModelForm(request.POST)
+        form = ItemRegisterForm(request.POST)
         if form.is_valid():
-            item = form.save(commit=False)
-            # item.author = request.user
-            item.cost_per_one = item.cost / item.capacity
-            print('등록성공')
+            item = form.register()
+            item.cost_per_one = int(item.cost) / int(item.capacity)
             item.save()
-            return redirect('costcalculator:calculator_menu')
+            print('등록성공')
+
+            return redirect('costcalculator:calculator-menu')
     else:
         form = ItemRegisterForm()
     context = {
@@ -40,4 +39,3 @@ def item_register(request):
 #         'form': form,
 #     }
 #     return render(request, 'stores/store_create.html', context)
-

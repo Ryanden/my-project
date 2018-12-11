@@ -1,28 +1,73 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
 
-	<div>
-        <a href="{% url 'costcalculator:item-register' %}" class="btn btn-primary">재료등록</a>
-        <a href="{% url 'costcalculator:calculator' %}" class="btn btn-primary">계산</a>
+<style>
+    table, th, td {
+        border: solid 1px black;
+        border-collapse: collapse;
+    }
 
-
-        <ul style="list-style:none;">
-            {% for item in items %}
-            <li>
-                <span>이름 : {{item.name}} | </span>
-                <span>용량 : {{item.capacity}} | </span>
-                <span>가격 : {{item.cost}} | </span>
-                <span>1g당 가격 : {{item.cost_per_one}}</span>
-            </li>
-            {% endfor %}
-        </ul>
+    table {
+        margin: auto;
+        text-align: center;
+    }
 
 
+</style>
 
-    </div>
+<div class="row mb-3">
+    <a href="{% url 'costcalculator:item-register' %}" class="btn btn-primary ml-3 mr-2">재료등록</a>
+    <a href="{% url 'costcalculator:recipe-create' %}" class="btn btn-primary">제품등록</a>
 </div>
-{% endblock %}
 
-cost_per_one
+<div class="row">
+    <table style="width:100%; margin-left:15px;">
+        <tr>
+            <th>재료이름</th>
+            <th>용량</th>
+            <th>구매가격</th>
+            <th>1g가격</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.capacity}}</td>
+            <td>{{item.cost}}</td>
+            <td>{{item.cost_per_one}}</td>
+            <td>
+                <form action="{% url 'costcalculator:item-delete' pk=item.pk %}" method="POST" class="float-right">
+                    {% csrf_token %}
+                    <button style="margin-left: -32px;" class="btn btn-danger btn-sm">지우기</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+<div class="row mt-3">
+    <table style="width:100%; margin-left:15px;">
+        <tr>
+
+            <th>레시피이름</th>
+        </tr>
+        {% for recipe in recipes %}
+        <tr>
+            <td>
+                <a href="{% url 'costcalculator:recipe-detail' pk=recipe.pk %}">{{recipe.name}}</a>
+            </td>
+            <td>
+                <form action="{% url 'costcalculator:recipe-delete' pk=recipe.pk %}" method="POST" class="float-right">
+                        {% csrf_token %}
+                        <button type="submit" style="margin-left: -32px; margin-right:-20px;" class="btn btn-danger btn-sm">X</button>
+                    </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}
