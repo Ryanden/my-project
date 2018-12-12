@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+
+    <form class="float-left" action="{% url 'product_option:product-option-create' pk=product.pk %}" method="POST">
+        {% csrf_token %}
+        <select name="product-option" id="">
+            {% for option in options %}
+            <option value="{{option.name}}">
+                {{option.name}}
+            </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-success">댓글 등록</button>
+    </form>
+</div>
+{% endblock %}

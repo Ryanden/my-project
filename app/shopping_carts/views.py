@@ -1,17 +1,17 @@
 from django.shortcuts import render
-from products.models import Product
+from product_options.models import ProductOption
 
 
-def product_list(request, pk):
-    product = Product.objects.filter(post=pk)
+def product_option_list(request, pk):
+    product_option = ProductOption.objects.filter(post=pk)
 
-    print(product)
+    print(product_option)
 
-    # print(product.product_name)
+    # print(product_option.product_name)
 
     context = {
 
-        'products': product
+        'product_options': product_option
     }
 
-    return render(request, 'store/store-product.html', context)
+    return render(request, 'product/product-product_option.html', context)

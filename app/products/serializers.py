@@ -8,8 +8,18 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = (
             'pk',
-            'product_name',
-            'product_option',
-            'product_price',
-            'product_total_count',
+            'author',
+            'title',
+            'company',
+            'type',
+            'photos',
+            'content',
+            'base_shipping_charge',
+            'free_shipping_charge_limit',
+            'extra_shipping_charge',
+            'created_at',
+            'tags',
+            'like_users',
+            'comments',
+            'inquiries',
         )

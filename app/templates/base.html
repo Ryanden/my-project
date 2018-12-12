@@ -39,10 +39,14 @@
     <div class="row">
         <ul style="list-style:none;">
             <li class="mr-2 float-right">
-                <a class="btn btn-outline-primary btn-sm" href="{% url 'stores:store-create' %}">스토어등록</a>
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'products:product-create' %}">스토어등록</a>
             </li>
             <li class="mr-2 float-right">
                 <a class="btn btn-outline-primary btn-sm" href="{% url 'costcalculator:calculator-menu' %}">원가계산기</a>
+            </li>
+
+            <li class="mr-2 float-right">
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'product_option:product_option-create' %}">옵션등록</a>
             </li>
         </ul>
     </div>

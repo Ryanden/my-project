@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from products.models import Product
+from product_options.models import ProductOption
 
 
 def product_list(request, pk):
-    product = Product.objects.filter(post=pk)
+    product = ProductOption.objects.filter(post=pk)
 
     print(product)
 
@@ -14,4 +14,4 @@ def product_list(request, pk):
         'products': product
     }
 
-    return render(request, 'store/store-product.html', context)
+    return render(request, 'product/product-product.html', context)

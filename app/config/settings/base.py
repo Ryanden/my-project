@@ -89,7 +89,7 @@ REST_FRAMEWORK = {
 INSTALLED_APPS = [
     'members',
     'products',
-    'stores',
+    'product_options',
     'orders',
     'shopping_carts',
     'lectures',

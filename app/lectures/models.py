@@ -1,5 +1,5 @@
 from django.db import models
-from stores.models import Store
+from products.models import Product
 
 
 class Lecture(models.Model):
@@ -11,8 +11,8 @@ class Lecture(models.Model):
 
     lecture_total_count = models.PositiveIntegerField(default=0)
 
-    store = models.ForeignKey(
-        Store,
+    product = models.ForeignKey(
+        Product,
         blank=True,
         on_delete=models.CASCADE,
         related_name='lectures'
@@ -22,6 +22,6 @@ class Lecture(models.Model):
         return f'{self.lecture_name}'
 
     @property
-    def store_name(self):
-        return f'{self.store.title}'
+    def product_name(self):
+        return f'{self.product.title}'
 

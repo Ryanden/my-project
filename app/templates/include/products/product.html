@@ -1,0 +1,61 @@
+
+<div class="products">
+	<a href="{% url 'products:product-detail' pk=product.pk %}">
+		<div class="card mb-3" style="width:250px; float:left; margin: 0 10px;">
+			<div class="card-header">
+				<div>
+					<div class="float-left">
+						{% if product.author.img_profile %}
+						<img src="{{ product.author.img_profile.url }}"
+							 style="width: 30px;"
+							 class="rounded-circle float-left mr-1"
+							 alt="">
+						{% endif %}
+						<span>{{ product.author.username }}</span>
+						<form action="" method="POST" style="display: inline-block;">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-outline-primary btn-sm">좋아요</button>
+						</form>
+					</div>
+					<form action="{% url 'products:product-delete' pk=product.pk %}" method="POST" class="float-right">
+						{% csrf_token %}
+						<button class="btn btn-danger btn-sm">지우기</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card-body p-0">
+				{% if product.photos %}
+				<img width="100%" src="{{ product.photos.url }}" alt="">
+				{% endif %}
+
+				{% if product.tags.exists %}
+					<div class="container p-2">
+						<div>
+							<!-- user.like_products.all에 현재 product가 속하는지 -->
+							{% if product in user.like_products.all %}
+							<form action="{% url 'products:product-dislike' pk=product.pk %}"
+										method="POST">
+								{% csrf_token %}
+								<button class="btn btn-sm btn-primary">좋아요 해제</button>
+							</form>
+							{% else %}
+							<form action="{% url 'products:product-like' pk=product.pk %}"
+										method="POST">
+								{% csrf_token %}
+								<button class="btn btn-sm btn-outline-primary">좋아요</button>
+							</form>
+							{% endif %}
+						</div>
+						<p>{{ product.content_html|safe|linebreaksbr }}</p>
+					</div>
+				{% endif %}
+				<br>
+				<p style="margin: 10px; font-size: 14px; color: gray;">{{product.company}}</p>
+				<p style="margin: 10px;">{{product.title}}</p>
+
+			</div>
+		</div>
+	</a>
+
+</div>

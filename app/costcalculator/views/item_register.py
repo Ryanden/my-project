@@ -27,15 +27,15 @@ def item_register(request):
 
 #
 # @login_required
-# def store_create_with_form(request):
+# def product_create_with_form(request):
 #     if request.method == 'POST':
 #         form = StoreForm(request.POST, request.FILES)
 #         if form.is_valid():
-#             store = form.save(author=request.user)
-#             return redirect('stores:store-detail', pk=store.pk)
+#             product = form.save(author=request.user)
+#             return redirect('products:product-detail', pk=product.pk)
 #     else:
 #         form = StoreForm()
 #     context = {
 #         'form': form,
 #     }
-#     return render(request, 'stores/store_create.html', context)
+#     return render(request, 'products/product_create.html', context)

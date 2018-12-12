@@ -1,7 +1,7 @@
 from django.db import models
 
 from lectures.models import Lecture
-from products.models import Product
+from product_options.models import ProductOption
 from members.models import User
 from orders.models import Order
 
@@ -13,8 +13,8 @@ class Cart(models.Model):
         related_name='carts'
     )
 
-    product = models.ForeignKey(
-        Product,
+    product_option = models.ForeignKey(
+        ProductOption,
         on_delete=models.CASCADE,
         related_name='carts',
         blank=True,
@@ -37,4 +37,4 @@ class Cart(models.Model):
         null=True,
     )
 
-    product_amount = models.PositiveIntegerField(default=1)
+    product_option_amount = models.PositiveIntegerField(default=1)
