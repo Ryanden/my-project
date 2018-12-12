@@ -5,23 +5,14 @@ from members.exceptions import RelationNotExist, DuplicateRelationException
 
 
 class User(AbstractUser):
-    CHOICES_GENDER = (
-        ('m', '남성'),
-        ('f', '여성'),
-        ('x', '선택안함'),
-    )
-    # CHOICES_USER_TYPE = (
-    #     ('d', 'Django'),
-    #     ('f', 'Facebook'),
-    # )
-    # user_type = models.CharField(choices=CHOICES_USER_TYPE, default='d')
-    # DEFAULT = ''
 
     user_id = models.EmailField(max_length=200)
     tel_number = models.CharField(max_length=200)
     img_profile = models.ImageField(upload_to='user', blank=True)
     introduce = models.TextField(blank=True)
     site = models.URLField(blank=True)
+
+    store_name = models.CharField(max_length=200, blank=True)
 
     to_relation_users = models.ManyToManyField(
         'self',

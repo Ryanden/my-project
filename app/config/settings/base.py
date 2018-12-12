@@ -94,6 +94,7 @@ INSTALLED_APPS = [
     'shopping_carts',
     'lectures',
     'costcalculator',
+    'stores',
 
     'django.contrib.admin',
     'django.contrib.auth',

@@ -9,20 +9,6 @@
         </div>
         <div class="col-sm-6">
 
-            {% if option %}
-            <form class="float-left" action="{% url 'product_option:product-option-create' pk=product.pk %}" method="POST">
-                {% csrf_token %}
-                <select name="product-option" id="">
-                    {% for option in options %}
-                    <option value="{{option.name}}">
-                        {{option.name}}
-                    </option>
-                    {% endfor %}
-                </select>
-                <button type="submit" class="btn btn-success">댓글 등록</button>
-            </form>
-            {% endif%}
-
         </div>
     </div>
 

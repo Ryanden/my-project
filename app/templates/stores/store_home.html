@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <h1>{{user.store_name}}</h1>
+    <br>
+    <h4>제품등록하기</h4>
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'products:product-create' %}">제품등록</a>
+    <a class="btn btn-outline-primary btn-sm" href="{% url 'product_option:product-option-create' %}">옵션등록</a>
+    <br>
+    <h4>제품목록</h4>
+
+
+    <ul>
+        {% for product in products %}
+        <li>
+            <a href="{% url 'products:product-detail' product.pk %}">{{product.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+
+
+</div>
+{% endblock %}

@@ -11,6 +11,8 @@ class ProductOption(models.Model):
 
     count = models.PositiveIntegerField(default=0)
 
+    photos = models.ImageField(upload_to='option', blank=True)
+
     product = models.ForeignKey(
         Product,
         blank=True,

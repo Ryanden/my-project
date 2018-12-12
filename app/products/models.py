@@ -18,6 +18,7 @@ class Product(models.Model):
     extra_shipping_charge = models.PositiveIntegerField(default=0)
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField('HashTag', blank=True)
 

@@ -82,6 +82,15 @@ class SignupForm(forms.Form):
         required=False,
     )
 
+    store_name = forms.CharField(
+        label='스토어이름',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+    )
+
     def clean_user_id(self):
 
         user_id = self.cleaned_data['user_id']
@@ -120,6 +129,7 @@ class SignupForm(forms.Form):
             'img_profile',
             'introduce',
             'site',
+            'store_name',
         ]
         create_user_dict = {}
         for key, value in self.cleaned_data.items():
