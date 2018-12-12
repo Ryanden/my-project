@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import CostCalculator, ItemRegister
+from .models import CostCalculator, ItemRegister, Recipe
 
 
 class ItemRegisterSerializer(serializers.ModelSerializer):
@@ -16,6 +16,17 @@ class ItemRegisterSerializer(serializers.ModelSerializer):
 
 
 class CostCalculatorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CostCalculator
+        fields = (
+            'pk',
+            'user',
+            'item',
+            'usage',
+        )
+
+
+class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CostCalculator
         fields = (
