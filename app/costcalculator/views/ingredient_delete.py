@@ -3,16 +3,16 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
-from ..models import CostCalculator
+from ..models import Ingredient
 
 __all__ = (
-    'recipe_material_delete',
+    'ingredient_delete',
 )
 
 
 @require_POST
 @login_required
-def recipe_material_delete(request, pk):
-    item = get_object_or_404(CostCalculator, pk=pk)
-    item.delete()
-    return redirect('costcalculator:recipe-detail', pk)
+def ingredient_delete(request, pk):
+    ingredient = get_object_or_404(Ingredient, pk=pk)
+    ingredient.delete()
+    return redirect('costcalculator:calculator-menu')

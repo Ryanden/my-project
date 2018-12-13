@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from costcalculator.forms import CalculatorForm
-from costcalculator.models import CostCalculator, Recipe
+from costcalculator.models import CostCalculator, Item
 
 __all__ = (
     'calculator',
@@ -11,14 +11,14 @@ __all__ = (
 
 @login_required
 def calculator(request):
-    materials = CostCalculator.objects.filter(user=request.user)
+    ingredients = CostCalculator.objects.filter(user=request.user)
 
-    recipes = Recipe.objects.filter(user=request.user)
+    items = Item.objects.filter(user=request.user)
 
     cost = 0
 
     for product in request.user.calculators.filter(user=request.user):
-        cost += product.item.cost_per_one * product.usage
+        cost += product.ingredient.cost_per_one * product.usage
 
     if request.method == 'POST':
         form = CalculatorForm(request.POST)
@@ -33,8 +33,8 @@ def calculator(request):
 
     context = {
         'form': form,
-        'materials': materials,
+        'ingredients': ingredients,
         'cost': cost,
-        'recipes': recipes,
+        'items': items,
     }
     return render(request, 'calculator/calculator.html', context)

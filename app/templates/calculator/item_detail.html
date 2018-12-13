@@ -62,15 +62,15 @@
             <th>사용된 용량</th>
             <th>가격</th>
         </tr>
-        {% for material in materials %}
+        {% for ingredient in ingredients %}
         <tr>
-            <td>{{material.item.name}}</td>
-            <td>{{material.item.cost_per_one}}</td>
-            <td>{{material.usage}}</td>
-            <td>{{material|single_prime_cost}}</td>
+            <td>{{ingredient.ingredient.name}}</td>
+            <td>{{ingredient.ingredient.cost_per_one}}</td>
+            <td>{{ingredient.usage}}</td>
+            <td>{{ingredient|single_prime_cost}}</td>
 
             <td>
-                <form action="{% url 'costcalculator:recipe-material-delete' pk=material.pk %}" method="POST"
+                <form action="{% url 'costcalculator:item-ingredient-delete' pk=ingredient.pk %}" method="POST"
                       class="float-right">
                     {% csrf_token %}
                     <button style="margin-left: -32px;" class="btn btn-danger btn-sm">빼기</button>
@@ -85,8 +85,8 @@
 
 
 <div class="row" style="margin-top:20px;">
-    {% for recipe in recipes %}
-    <form class="col-sm" action="{% url 'costcalculator:recipe-register' pk=recipe.pk %}" method="POST"
+    {% for item in items %}
+    <form class="col-sm" action="{% url 'costcalculator:item-register' pk=item.pk %}" method="POST"
           enctype="multipart/form-data">
         {% endfor %}
         {% csrf_token %}
@@ -101,14 +101,14 @@
                 <th>수익</th>
                 <th>마진</th>
             </tr>
-            {% if recipes.count > 0 %}
+            {% if items.count > 0 %}
             <tr>
-                {% for recipe in recipes %}
+                {% for item in items %}
                 <td>
-                    {{recipe.name}}
+                    {{item.name}}
                 </td>
                 <td>
-                    {{recipe.price}}원
+                    {{item.price}}원
                 </td>
 
                 <td>
@@ -116,11 +116,11 @@
                 </td>
 
                 <td>
-                    <input name="profit" type="text" value="{{ cost| get_profit:recipe.price }}">
+                    <input name="profit" type="text" value="{{ cost| get_profit:item.price }}">
                 </td>
 
                 <td>
-                    <input name="margin" type="text" value="{{ cost| get_margin:recipe.price }}">
+                    <input name="margin" type="text" value="{{ cost| get_margin:item.price }}">
                 </td>
 
 

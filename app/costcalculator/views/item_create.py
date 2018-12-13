@@ -1,16 +1,16 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from ..forms import RecipeForm
+from ..forms import ItemForm
 
 __all__ = (
-    'recipe_create',
+    'item_create',
 )
 
 
-def recipe_create(request):
+def item_create(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST)
+        form = ItemForm(request.POST)
         if form.is_valid():
 
             form.save(user=request.user)
@@ -19,9 +19,9 @@ def recipe_create(request):
 
             return redirect('costcalculator:calculator-menu')
     else:
-        form = RecipeForm()
+        form = ItemForm()
     context = {
         'form': form,
     }
-    return render(request, 'calculator/recipe_create.html', context)
+    return render(request, 'calculator/item_create.html', context)
 

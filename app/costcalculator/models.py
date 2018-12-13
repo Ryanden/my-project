@@ -2,7 +2,7 @@ from django.db import models
 from members.models import User
 
 
-class ItemRegister(models.Model):
+class Ingredient(models.Model):
     name = models.CharField(max_length=200)
 
     capacity = models.PositiveIntegerField(default=0)
@@ -15,11 +15,11 @@ class ItemRegister(models.Model):
         return self.name
 
 
-class Recipe(models.Model):
+class Item(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='recipes'
+        related_name='items'
     )
     name = models.CharField(max_length=200)
 
@@ -44,8 +44,8 @@ class CostCalculator(models.Model):
         related_name='calculators'
     )
 
-    item = models.ForeignKey(
-        ItemRegister,
+    ingredient = models.ForeignKey(
+        Ingredient,
         on_delete=models.CASCADE,
         related_name='calculators',
     )

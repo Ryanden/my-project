@@ -1,41 +1,30 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from ..forms import ItemRegisterForm
+from costcalculator.forms import CalculatorForm
+from costcalculator.models import Item, CostCalculator
 
 __all__ = (
     'item_register',
 )
 
 
-def item_register(request):
-    if request.method == 'POST':
-        form = ItemRegisterForm(request.POST)
-        if form.is_valid():
-            item = form.register()
-            item.cost_per_one = int(item.cost) / int(item.capacity)
-            item.save()
-            print('등록성공')
+@login_required
+def item_register(request, pk):
 
-            return redirect('costcalculator:calculator-menu')
-    else:
-        form = ItemRegisterForm()
-    context = {
-        'form': form,
-    }
-    return render(request, 'calculator/item_register.html', context)
+    item = Item.objects.get(pk=pk)
 
-#
-# @login_required
-# def product_create_with_form(request):
-#     if request.method == 'POST':
-#         form = StoreForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             product = form.save(author=request.user)
-#             return redirect('products:product-detail', pk=product.pk)
-#     else:
-#         form = StoreForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'products/product_create.html', context)
+    cost = 0
+
+    for product in request.user.calculators.filter(user=request.user):
+        cost += product.ingredient.cost_per_one * product.usage
+
+    item.prime_cost = cost
+
+    item.margin = request.POST['margin']
+
+    item.profit = request.POST['profit']
+
+    item.save()
+
+    return redirect('costcalculator:calculator-menu')

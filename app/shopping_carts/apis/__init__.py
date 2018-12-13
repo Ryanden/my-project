@@ -12,3 +12,8 @@ class CartList(generics.ListAPIView):
 class CartDetail(generics.RetrieveAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+
+class CartCreate(generics.ListCreateAPIView):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer

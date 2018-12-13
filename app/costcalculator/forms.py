@@ -1,12 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import ItemRegister, CostCalculator, Recipe
+from .models import Ingredient, CostCalculator, Item
 
 
-class ItemRegisterModelForm(forms.ModelForm):
+class IngredientModelForm(forms.ModelForm):
     class Meta:
-        model = ItemRegister
+        model = Ingredient
         fields = (
             'name',
             'capacity',
@@ -14,7 +14,7 @@ class ItemRegisterModelForm(forms.ModelForm):
         )
 
 
-class ItemRegisterForm(forms.Form):
+class IngredientForm(forms.Form):
     name = forms.CharField(
         label='이름',
         widget=forms.TextInput(
@@ -45,7 +45,7 @@ class ItemRegisterForm(forms.Form):
     def clean(self):
         super().clean()
         name = self.cleaned_data['name']
-        if ItemRegister.objects.filter(name=name).exists():
+        if Ingredient.objects.filter(name=name).exists():
             raise ValidationError('이미 등록된 이름입니다.')
         return self.cleaned_data
 
@@ -56,13 +56,13 @@ class ItemRegisterForm(forms.Form):
             'cost',
         ]
 
-        create_item_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+        create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 
-        item = ItemRegister.objects.create(**create_item_dict)
-        return item
+        ingredient = Ingredient.objects.create(**create_ingredient_dict)
+        return ingredient
 
 
-class RecipeForm(forms.Form):
+class ItemForm(forms.Form):
     name = forms.CharField(
         label='판매제품',
         widget=forms.TextInput(
@@ -86,7 +86,7 @@ class RecipeForm(forms.Form):
     # def clean(self):
     #     super().clean()
     #     name = self.cleaned_data['name']
-    #     if Recipe.objects.filter(name=name).exists():
+    #     if Item.objects.filter(name=name).exists():
     #         raise ValidationError('이미 등록된 레시피입니다.')
     #     return self.cleaned_data
     #
@@ -96,13 +96,13 @@ class RecipeForm(forms.Form):
     #         'price',
     #     ]
     #
-    #     create_recipe_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+    #     create_item_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
     #
-    #     recipe = Recipe.objects.create(**create_recipe_dict)
-    #     return recipe
+    #     item = Item.objects.create(**create_item_dict)
+    #     return item
 
     def save(self, user):
-        return Recipe.objects.create(
+        return Item.objects.create(
             user=user,
             name=self.cleaned_data['name'],
             price=self.cleaned_data['price'],
@@ -110,10 +110,10 @@ class RecipeForm(forms.Form):
 
 
 class CalculatorForm(forms.Form):
-    item = forms.ModelChoiceField(
+    ingredient = forms.ModelChoiceField(
         label='이름',
         queryset=(
-            ItemRegister.objects.all().order_by('name')
+            Ingredient.objects.all().order_by('name')
         ),
         widget=forms.Select(
             attrs={
@@ -137,8 +137,8 @@ class CalculatorForm(forms.Form):
         super().clean()
 
         print(self.cleaned_data)
-        item = self.cleaned_data.get('item')
-        # if CostCalculator.objects.filter(item=item.pk).exists():
+        ingredient = self.cleaned_data.get('ingredient')
+        # if CostCalculator.objects.filter(ingredient=ingredient.pk).exists():
         #     raise ValidationError('이미 등록된 재료입니다.')
         return self.cleaned_data
 
@@ -149,23 +149,23 @@ class CalculatorForm(forms.Form):
             'cost',
         ]
 
-        create_item_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+        create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 
-        item = ItemRegister.objects.create(**create_item_dict)
-        return item
+        ingredient = Ingredient.objects.create(**create_ingredient_dict)
+        return ingredient
 
     def save(self, user):
         return CostCalculator.objects.create(
             user=user,
-            item=self.cleaned_data['item'],
+            ingredient=self.cleaned_data['ingredient'],
             usage=self.cleaned_data['usage'],
         )
 
 # class CalculatorForm(forms.Form):
-#     item = forms.ModelChoiceField(
+#     ingredient = forms.ModelChoiceField(
 #         label='이름',
 #         queryset=(
-#             ItemRegister.objects.all().order_by('name')
+#             Ingredient.objects.all().order_by('name')
 #         ),
 #         widget=forms.Select(
 #             attrs={
@@ -189,8 +189,8 @@ class CalculatorForm(forms.Form):
 #         super().clean()
 #
 #         print(self.cleaned_data)
-#         item = self.cleaned_data.get('item')
-#         if CostCalculator.objects.filter(item=item.pk).exists():
+#         ingredient = self.cleaned_data.get('ingredient')
+#         if CostCalculator.objects.filter(ingredient=ingredient.pk).exists():
 #             raise ValidationError('이미 등록된 재료입니다.')
 #         return self.cleaned_data
 #
@@ -201,14 +201,14 @@ class CalculatorForm(forms.Form):
 #             'cost',
 #         ]
 #
-#         create_item_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+#         create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 #
-#         item = ItemRegister.objects.create(**create_item_dict)
-#         return item
+#         ingredient = Ingredient.objects.create(**create_ingredient_dict)
+#         return ingredient
 #
 #     def save(self, user):
 #         return CostCalculator.objects.create(
 #             user=user,
-#             item=self.cleaned_data['item'],
+#             ingredient=self.cleaned_data['ingredient'],
 #             usage=self.cleaned_data['usage'],
 #         )

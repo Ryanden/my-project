@@ -11,3 +11,6 @@ class Order(models.Model):
     requested_at = models.DateTimeField(auto_now_add=True)
 
     cancel_at = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.address1

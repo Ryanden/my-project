@@ -28,7 +28,7 @@
         </tr>
         {% for calculator in calculators %}
         <tr>
-            <td>{{calculator.item}}</td>
+            <td>{{calculator.ingredient}}</td>
             <td>{{calculator.user}}</td>
             <td>{{calculator.usage}}</td>
         </tr>
@@ -45,12 +45,12 @@
             <th>가격</th>
             <th>1g가격</th>
         </tr>
-        {% for item in items %}
+        {% for ingredient in ingredients %}
         <tr>
-            <td>{{item.name}}</td>
-            <td>{{item.capacity}}</td>
-            <td>{{item.cost}}</td>
-            <td>{{item.cost_per_one}}</td>
+            <td>{{ingredient.name}}</td>
+            <td>{{ingredient.capacity}}</td>
+            <td>{{ingredient.cost}}</td>
+            <td>{{ingredient.cost_per_one}}</td>
         </tr>
         {% endfor %}
     </table>

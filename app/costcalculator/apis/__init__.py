@@ -1,17 +1,17 @@
 from rest_framework import generics
 
-from ..models import ItemRegister, CostCalculator
-from ..serializers import ItemRegisterSerializer, CostCalculatorSerializer
+from ..models import Ingredient, CostCalculator
+from ..serializers import IngredientSerializer, CostCalculatorSerializer
 
 
-class ItemRegisterList(generics.ListAPIView):
-    queryset = ItemRegister.objects.all()
-    serializer_class = ItemRegisterSerializer
+class IngredientList(generics.ListAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
 
 
-class ItemRegisterDetail(generics.RetrieveAPIView):
-    queryset = ItemRegister.objects.all()
-    serializer_class = ItemRegisterSerializer
+class IngredientDetail(generics.RetrieveAPIView):
+    queryset = Ingredient.objects.all()
+    serializer_class = IngredientSerializer
 
 
 class CostCalculatorList(generics.ListAPIView):

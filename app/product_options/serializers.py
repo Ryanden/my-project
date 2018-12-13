@@ -10,6 +10,8 @@ class ProductOptionSerializer(serializers.ModelSerializer):
             'pk',
             'name',
             'description',
+            'photos',
+            'product',
             'price',
             'count',
         )

@@ -11,5 +11,6 @@ class CartSerializer(serializers.ModelSerializer):
             'user',
             'product_option',
             'order',
+            'product_option_amount',
         )
 

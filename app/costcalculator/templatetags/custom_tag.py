@@ -6,14 +6,14 @@ register = template.Library()
 
 @register.filter
 def single_prime_cost(value):
-    cal_list = CostCalculator.objects.filter(item=value.item.pk)
+    cal_list = CostCalculator.objects.filter(ingredient=value.ingredient.pk)
 
-    single_material_cost = 0
+    single_ingredient_cost = 0
 
     for cal in cal_list:
-        single_material_cost += cal.item.cost_per_one * cal.usage
+        single_ingredient_cost += cal.ingredient.cost_per_one * cal.usage
 
-    return single_material_cost
+    return single_ingredient_cost
 
 
 @register.filter
@@ -23,7 +23,7 @@ def total_prime_cost():
     total_cost = 0
 
     for cal in cal_list:
-        total_cost += cal.item.cost_per_one * cal.usage
+        total_cost += cal.ingredient.cost_per_one * cal.usage
 
     return total_cost
 
@@ -45,7 +45,7 @@ def get_profit(cost, price):
 # @register.filter
 # def margin_cost(value):
 #     # 모든 재료값을 더한 원재료 가격
-#     prime_costs = value.item.total_cost
+#     prime_costs = value.ingredient.total_cost
 #
 #     margin = (1 - (prime_costs / 2000)) * 100
 #
