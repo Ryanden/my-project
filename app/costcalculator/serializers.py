@@ -28,10 +28,15 @@ class CostCalculatorSerializer(serializers.ModelSerializer):
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CostCalculator
+        model = Item
         fields = (
             'pk',
             'user',
-            'ingredient',
-            'usage',
+            'name',
+            'prime_cost',
+            'price',
+            'margin',
+            'profit',
+            'count',
         )
+
