@@ -95,6 +95,7 @@ INSTALLED_APPS = [
     'lectures',
     'costcalculator',
     'stores',
+    'recipe',
 
     'django.contrib.admin',
     'django.contrib.auth',

@@ -15,6 +15,26 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserCreate(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserPatch(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDelete(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
 class AuthToken(APIView):
     def post(self, request):
         # 전달받은 데이터에서 username, password추출
