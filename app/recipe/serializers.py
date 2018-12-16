@@ -12,8 +12,9 @@ class RecipeSerializer(serializers.ModelSerializer):
             'user',
             'type',
             'capacity',
-            'method',
+            'manufacturing_method',
             'packing_material',
+            'preservation_method',
             'expiration_date',
         )
 

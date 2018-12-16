@@ -14,9 +14,11 @@ class Recipe(models.Model):
 
     capacity = models.TextField()
 
-    method = models.TextField()
+    manufacturing_method = models.TextField()
 
     packing_material = models.TextField()
+
+    preservation_method = models.TextField()
 
     expiration_date = models.TextField()
 

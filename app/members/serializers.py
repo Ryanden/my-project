@@ -17,6 +17,10 @@ class UserSerializer(serializers.ModelSerializer):
             'site',
             'like_products',
             'carts',
+            'recipes',
+            'items',
+
+
         )
 
 

@@ -12,8 +12,9 @@ class RecipeModelForm(forms.ModelForm):
             'user',
             'type',
             'capacity',
-            'method',
+            'manufacturing_method',
             'packing_material',
+            'preservation_method',
             'expiration_date',
         )
 
@@ -46,8 +47,17 @@ class RecipeForm(forms.Form):
         )
     )
 
-    method = forms.CharField(
+    manufacturing_method = forms.CharField(
         label='제조방법',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+            }
+        )
+    )
+
+    preservation_method = forms.CharField(
+        label='포장방법',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
@@ -86,8 +96,9 @@ class RecipeForm(forms.Form):
             'user',
             'type',
             'capacity',
-            'method',
+            'manufacturing_method',
             'packing_material',
+            'preservation_method',
             'expiration_date',
         ]
 
