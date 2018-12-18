@@ -96,6 +96,7 @@ INSTALLED_APPS = [
     'costcalculator',
     'stores',
     'recipe',
+    'quality_test',
 
     'django.contrib.admin',
     'django.contrib.auth',

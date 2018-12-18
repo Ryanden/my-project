@@ -10,4 +10,5 @@ urlpatterns = [
     path('orders/', include('orders.urls.apis')),
     path('calculator/', include('costcalculator.urls.apis')),
     path('recipe/', include('recipe.urls.apis')),
+    path('quality_test/', include('quality_test.urls.apis')),
 ]

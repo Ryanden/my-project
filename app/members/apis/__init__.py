@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
-from rest_framework import generics
+from rest_framework import generics, status, permissions
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed, NotAuthenticated
 from rest_framework.response import Response
@@ -16,8 +16,12 @@ class UserList(generics.ListAPIView):
 
 
 class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    def get(self, request, pk):
+        serializer = UserSerializer(User.objects.get(pk=pk))
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    permissions = (permissions.IsAuthenticated,)
 
 
 class UserCreate(generics.ListCreateAPIView):

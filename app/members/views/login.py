@@ -24,12 +24,14 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
+
         print(request.user.is_authenticated)
         # 받은 username과 password에 해당하는 User가 있는지 인증
         user = authenticate(request, username=username, password=password)
 
         # 인증에 성공한 경우
         if user is not None:
+
             # 세션값을 만들어 DB에 저장하고, HTTP response의 Cookie에 해당값을 담아보내도록 하는
             # login()함수를 실행한다
 
