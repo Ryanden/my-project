@@ -97,6 +97,7 @@ INSTALLED_APPS = [
     'stores',
     'recipe',
     'quality_test',
+    'ingredients_labeling',
 
     'django.contrib.admin',
     'django.contrib.auth',
