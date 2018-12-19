@@ -6,13 +6,13 @@ from django.views.decorators.http import require_POST
 from ..models import CostCalculator
 
 __all__ = (
-    'item_ingredient_delete',
+    'item_material_delete',
 )
 
 
 @require_POST
 @login_required
-def item_ingredient_delete(request, pk):
-    ingredient = get_object_or_404(CostCalculator, pk=pk)
-    ingredient.delete()
+def item_material_delete(request, pk):
+    material = get_object_or_404(CostCalculator, pk=pk)
+    material.delete()
     return redirect('costcalculator:item-detail', pk)

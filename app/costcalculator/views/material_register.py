@@ -1,29 +1,29 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from ..forms import IngredientForm
+from ..forms import MaterialForm
 
 __all__ = (
-    'ingredient_register',
+    'material_register',
 )
 
 
-def ingredient_register(request):
+def material_register(request):
     if request.method == 'POST':
-        form = IngredientForm(request.POST)
+        form = MaterialForm(request.POST)
         if form.is_valid():
-            ingredient = form.register()
-            ingredient.cost_per_one = int(ingredient.cost) / int(ingredient.capacity)
-            ingredient.save()
+            material = form.register()
+            material.cost_per_one = int(material.cost) / int(material.capacity)
+            material.save()
             print('등록성공')
 
             return redirect('costcalculator:calculator-menu')
     else:
-        form = IngredientForm()
+        form = MaterialForm()
     context = {
         'form': form,
     }
-    return render(request, 'calculator/ingredient_register.html', context)
+    return render(request, 'calculator/material_register.html', context)
 
 #
 # @login_required

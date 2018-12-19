@@ -17,7 +17,7 @@
 </style>
 
 <div class="row mb-3">
-    <a href="{% url 'costcalculator:ingredient-register' %}" class="btn btn-primary ml-3 mr-2">재료등록</a>
+    <a href="{% url 'costcalculator:material-register' %}" class="btn btn-primary ml-3 mr-2">재료등록</a>
     <a href="{% url 'costcalculator:item-create' %}" class="btn btn-primary">제품등록</a>
 </div>
 
@@ -29,14 +29,14 @@
             <th>구매가격</th>
             <th>1g가격</th>
         </tr>
-        {% for ingredient in ingredients %}
+        {% for material in materials %}
         <tr>
-            <td>{{ingredient.name}}</td>
-            <td>{{ingredient.capacity}}</td>
-            <td>{{ingredient.cost}}</td>
-            <td>{{ingredient.cost_per_one}}</td>
+            <td>{{material.name}}</td>
+            <td>{{material.capacity}}</td>
+            <td>{{material.cost}}</td>
+            <td>{{material.cost_per_one}}</td>
             <td>
-                <form action="{% url 'costcalculator:ingredient-delete' pk=ingredient.pk %}" method="POST" class="float-right">
+                <form action="{% url 'costcalculator:material-delete' pk=material.pk %}" method="POST" class="float-right">
                     {% csrf_token %}
                     <button style="margin-left: -32px;" class="btn btn-danger btn-sm">지우기</button>
                 </form>

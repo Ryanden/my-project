@@ -9,7 +9,7 @@ urlpatterns = [
     path('item/', apis.ItemList.as_view()),
     path('item/<int:pk>/', apis.ItemDetail.as_view()),
     path('item/create/', apis.ItemCreate.as_view()),
-    path('ingredient/', apis.IngredientList.as_view()),
-    path('ingredient/<int:pk>/', apis.IngredientDetail.as_view()),
-    path('ingredient/create/', apis.IngredientCreate.as_view()),
+    path('material/', apis.MaterialList.as_view()),
+    path('material/<int:pk>/', apis.MaterialDetail.as_view()),
+    path('material/create/', apis.MaterialCreate.as_view()),
 ]

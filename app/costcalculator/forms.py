@@ -1,12 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Ingredient, CostCalculator, Item
+from .models import Material, CostCalculator, Item
 
 
-class IngredientModelForm(forms.ModelForm):
+class MaterialModelForm(forms.ModelForm):
     class Meta:
-        model = Ingredient
+        model = Material
         fields = (
             'name',
             'capacity',
@@ -14,7 +14,7 @@ class IngredientModelForm(forms.ModelForm):
         )
 
 
-class IngredientForm(forms.Form):
+class MaterialForm(forms.Form):
     name = forms.CharField(
         label='이름',
         widget=forms.TextInput(
@@ -45,7 +45,7 @@ class IngredientForm(forms.Form):
     def clean(self):
         super().clean()
         name = self.cleaned_data['name']
-        if Ingredient.objects.filter(name=name).exists():
+        if Material.objects.filter(name=name).exists():
             raise ValidationError('이미 등록된 이름입니다.')
         return self.cleaned_data
 
@@ -56,10 +56,10 @@ class IngredientForm(forms.Form):
             'cost',
         ]
 
-        create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+        create_material_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 
-        ingredient = Ingredient.objects.create(**create_ingredient_dict)
-        return ingredient
+        material = Material.objects.create(**create_material_dict)
+        return material
 
 
 class ItemForm(forms.Form):
@@ -110,10 +110,10 @@ class ItemForm(forms.Form):
 
 
 class CalculatorForm(forms.Form):
-    ingredient = forms.ModelChoiceField(
+    material = forms.ModelChoiceField(
         label='이름',
         queryset=(
-            Ingredient.objects.all().order_by('name')
+            Material.objects.all().order_by('name')
         ),
         widget=forms.Select(
             attrs={
@@ -137,8 +137,8 @@ class CalculatorForm(forms.Form):
         super().clean()
 
         print(self.cleaned_data)
-        ingredient = self.cleaned_data.get('ingredient')
-        # if CostCalculator.objects.filter(ingredient=ingredient.pk).exists():
+        material = self.cleaned_data.get('material')
+        # if CostCalculator.objects.filter(material=material.pk).exists():
         #     raise ValidationError('이미 등록된 재료입니다.')
         return self.cleaned_data
 
@@ -149,23 +149,23 @@ class CalculatorForm(forms.Form):
             'cost',
         ]
 
-        create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+        create_material_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 
-        ingredient = Ingredient.objects.create(**create_ingredient_dict)
-        return ingredient
+        material = Material.objects.create(**create_material_dict)
+        return material
 
     def save(self, user):
         return CostCalculator.objects.create(
             user=user,
-            ingredient=self.cleaned_data['ingredient'],
+            material=self.cleaned_data['material'],
             usage=self.cleaned_data['usage'],
         )
 
 # class CalculatorForm(forms.Form):
-#     ingredient = forms.ModelChoiceField(
+#     material = forms.ModelChoiceField(
 #         label='이름',
 #         queryset=(
-#             Ingredient.objects.all().order_by('name')
+#             Material.objects.all().order_by('name')
 #         ),
 #         widget=forms.Select(
 #             attrs={
@@ -189,8 +189,8 @@ class CalculatorForm(forms.Form):
 #         super().clean()
 #
 #         print(self.cleaned_data)
-#         ingredient = self.cleaned_data.get('ingredient')
-#         if CostCalculator.objects.filter(ingredient=ingredient.pk).exists():
+#         material = self.cleaned_data.get('material')
+#         if CostCalculator.objects.filter(material=material.pk).exists():
 #             raise ValidationError('이미 등록된 재료입니다.')
 #         return self.cleaned_data
 #
@@ -201,14 +201,14 @@ class CalculatorForm(forms.Form):
 #             'cost',
 #         ]
 #
-#         create_ingredient_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
+#         create_material_dict = dict(filter(lambda item: item[0] in fields, self.cleaned_data.items()))
 #
-#         ingredient = Ingredient.objects.create(**create_ingredient_dict)
-#         return ingredient
+#         material = Material.objects.create(**create_material_dict)
+#         return material
 #
 #     def save(self, user):
 #         return CostCalculator.objects.create(
 #             user=user,
-#             ingredient=self.cleaned_data['ingredient'],
+#             material=self.cleaned_data['material'],
 #             usage=self.cleaned_data['usage'],
 #         )

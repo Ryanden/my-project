@@ -1,19 +1,19 @@
 from django.shortcuts import render
 
-from costcalculator.models import Ingredient, Item
+from costcalculator.models import Material, Item
 
 __all__ = (
-    'ingredient_list',
+    'material_list',
 )
 
 
-def ingredient_list(request):
-    ingredients = Ingredient.objects.all()
+def material_list(request):
+    materials = Material.objects.all()
 
     items = Item.objects.all()
 
     context = {
-        'ingredients': ingredients,
+        'materials': materials,
         'items': items,
     }
     return render(request, 'calculator/calculator_menu.html', context)

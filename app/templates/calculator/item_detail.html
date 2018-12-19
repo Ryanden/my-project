@@ -62,15 +62,15 @@
             <th>사용된 용량</th>
             <th>가격</th>
         </tr>
-        {% for ingredient in ingredients %}
+        {% for material in materials %}
         <tr>
-            <td>{{ingredient.ingredient.name}}</td>
-            <td>{{ingredient.ingredient.cost_per_one}}</td>
-            <td>{{ingredient.usage}}</td>
-            <td>{{ingredient|single_prime_cost}}</td>
+            <td>{{material.material.name}}</td>
+            <td>{{material.material.cost_per_one}}</td>
+            <td>{{material.usage}}</td>
+            <td>{{material|single_prime_cost}}</td>
 
             <td>
-                <form action="{% url 'costcalculator:item-ingredient-delete' pk=ingredient.pk %}" method="POST"
+                <form action="{% url 'costcalculator:item-material-delete' pk=material.pk %}" method="POST"
                       class="float-right">
                     {% csrf_token %}
                     <button style="margin-left: -32px;" class="btn btn-danger btn-sm">빼기</button>

@@ -2,7 +2,7 @@ from django.db import models
 from members.models import User
 
 
-class Ingredient(models.Model):
+class Material(models.Model):
     name = models.CharField(max_length=200)
 
     capacity = models.PositiveIntegerField(default=0)
@@ -44,8 +44,8 @@ class CostCalculator(models.Model):
         related_name='calculators'
     )
 
-    ingredient = models.ForeignKey(
-        Ingredient,
+    material = models.ForeignKey(
+        Material,
         on_delete=models.CASCADE,
         related_name='calculators',
     )

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import CostCalculator, Ingredient, Item
+from .models import CostCalculator, Material, Item
 
 
-class IngredientSerializer(serializers.ModelSerializer):
+class MaterialSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Ingredient
+        model = Material
         fields = (
             'pk',
             'name',
@@ -21,7 +21,7 @@ class CostCalculatorSerializer(serializers.ModelSerializer):
         fields = (
             'pk',
             'user',
-            'ingredient',
+            'material',
             'usage',
         )
 

@@ -11,14 +11,14 @@ __all__ = (
 
 @login_required
 def item_detail(request, pk):
-    ingredients = CostCalculator.objects.filter(user=request.user)
+    materials = CostCalculator.objects.filter(user=request.user)
 
     items = Item.objects.filter(pk=pk)
 
     cost = 0
 
     for product in request.user.calculators.filter(user=request.user):
-        cost += product.ingredient.cost_per_one * product.usage
+        cost += product.material.cost_per_one * product.usage
 
     if request.method == 'POST':
         form = CalculatorForm(request.POST)
@@ -33,7 +33,7 @@ def item_detail(request, pk):
 
     context = {
         'form': form,
-        'ingredients': ingredients,
+        'materials': materials,
         'cost': cost,
         'items': items,
     }

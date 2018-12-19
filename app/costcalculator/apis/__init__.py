@@ -1,25 +1,25 @@
 from rest_framework import generics
 
 from members.models import User
-from ..models import Ingredient, CostCalculator, Item
-from ..serializers import IngredientSerializer, CostCalculatorSerializer, ItemSerializer
+from ..models import Material, CostCalculator, Item
+from ..serializers import MaterialSerializer, CostCalculatorSerializer, ItemSerializer
 
 
-# ingredient api
+# material api
 
-class IngredientList(generics.ListAPIView):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
-
-
-class IngredientDetail(generics.RetrieveAPIView):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
+class MaterialList(generics.ListAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
 
 
-class IngredientCreate(generics.ListCreateAPIView):
-    queryset = Ingredient.objects.all()
-    serializer_class = IngredientSerializer
+class MaterialDetail(generics.RetrieveAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
+
+
+class MaterialCreate(generics.ListCreateAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
 
 
 # calculator api

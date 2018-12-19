@@ -17,7 +17,7 @@ def item_register(request, pk):
     cost = 0
 
     for product in request.user.calculators.filter(user=request.user):
-        cost += product.ingredient.cost_per_one * product.usage
+        cost += product.material.cost_per_one * product.usage
 
     item.prime_cost = cost
 
