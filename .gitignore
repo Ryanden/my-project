@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io/api/git,linux,macos,django,python,pycharm+all
 
 # utils
-jupyter_test
+/utils
 
 # project Secrets
 /.secrets
