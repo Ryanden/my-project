@@ -53,8 +53,10 @@ class UserCreate(APIView):
 class UserLogout(APIView):
     def get(self, request, format=None):
         # simply delete the token to force a login
-        request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        if request.user.is_authenticated:
+            request.user.auth_token.delete()
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
 class AuthToken(APIView):
