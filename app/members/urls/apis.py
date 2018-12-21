@@ -6,8 +6,6 @@ urlpatterns = [
     path('', apis.UserList.as_view()),
     path('signup/', apis.UserCreate.as_view()),
     path('<int:pk>/', apis.UserDetail.as_view()),
-    path('patch/<int:pk>/', apis.UserPatch.as_view()),
-    path('delete/<int:pk>/', apis.UserDelete.as_view()),
     path('signin/', apis.AuthToken.as_view()),
     path('auth-test/', apis.AuthenticationTest.as_view()),
     path('facebook-auth-token/', apis.FacebookAuthToken.as_view()),

@@ -59,16 +59,6 @@ class UserCreate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserPatch(generics.UpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class UserDelete(generics.DestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
 class AuthToken(APIView):
     def post(self, request):
         # 전달받은 데이터에서 username, password추출
