@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
-from rest_framework import serializers
+from rest_framework import serializers, status
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 from rest_framework.validators import UniqueValidator
 
 User = get_user_model()
@@ -16,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
+
         fields = (
             'pk',
             'username',
@@ -29,6 +31,18 @@ class UserSerializer(serializers.ModelSerializer):
             'items',
         )
 
+    def update(self, instance, validated_data):
+
+        if validated_data.get('username'):
+            print('user_name 은 보내지말것')
+            return instance
+
+        instance.nickname = validated_data.get('nickname')
+        instance.phone_number = validated_data.get('phone_number')
+        instance.img_profile = validated_data.get('img_profile')
+        instance.save()
+        return instance
+
     # def validate_password(self, value):
     #     print('value츌력', self.initial_data)
     #     if value == self.initial_data.get('check_password'):
@@ -40,6 +54,9 @@ class UserSerializer(serializers.ModelSerializer):
         User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
+            nickname=validated_data['nickname'],
+            phone_number=validated_data['phone_number'],
+            img_profile=validated_data['img_profile'],
         )
 
         return validated_data

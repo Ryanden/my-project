@@ -15,13 +15,32 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-class UserDetail(generics.RetrieveAPIView):
-    def get(self, request, pk):
-        serializer = UserSerializer(User.objects.get(pk=pk))
+# class UserDetail(generics.RetrieveAPIView):
+#     def get(self, request, pk):
+#         serializer = UserSerializer(User.objects.get(pk=pk))
+#
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+#
+#     permissions = (permissions.IsAuthenticated,)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
-    permissions = (permissions.IsAuthenticated,)
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+    )
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class UserCreate(APIView):
@@ -33,7 +52,6 @@ class UserCreate(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

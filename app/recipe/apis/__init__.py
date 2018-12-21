@@ -1,7 +1,9 @@
+from django.shortcuts import get_list_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import NotAuthenticated
+
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
+
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -16,10 +18,12 @@ class RecipeList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.list(request, *args, **kwargs)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = Recipe.objects.filter(user=self.request.user)
+        queryset = get_list_or_404(Recipe, user=self.request.user)
 
         return queryset
 
@@ -57,7 +61,7 @@ class RecipeCreate(APIView):
         #   UserSerializer로 serialize한 결과를 리턴
         # 인증 안되어있으면 NotAuthenticated예외 발생
         if request.user.is_authenticated:
-            return Response(RecipeSerializer(request.user).data)
+            return Response(RecipeSerializer().data)
         raise NotAuthenticated('인증안됨')
 
     def post(self, request):
@@ -78,13 +82,3 @@ class RecipeCreate(APIView):
 
             return Response(RecipeSerializer(recipe).data, status=status.HTTP_201_CREATED)
         raise NotAuthenticated('인증안됨')
-
-
-class RecipePatch(generics.UpdateAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
-
-
-class RecipeDelete(generics.DestroyAPIView):
-    queryset = Recipe.objects.all()
-    serializer_class = RecipeSerializer
