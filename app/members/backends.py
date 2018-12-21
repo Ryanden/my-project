@@ -21,7 +21,7 @@ class FacebookBackend:
         """
         Facebook의 Authorization Code가 주어졌을 때
         적절히 처리해서
-        facebook의 user_id에 해당하는 User가 있으면 해당 User를 리턴
+        facebook의 username에 해당하는 User가 있으면 해당 User를 리턴
         없으면 생성해서 리턴
         :param request: View의 HttpRequest object
         :param code: Facebook Authorization code
@@ -58,7 +58,7 @@ class FacebookBackend:
             :return: JSON응답을 파싱한 파이썬 Object
             """
             # 받은 액세스 토큰을 debug
-            # 결과에서 해당 토큰의 user_id(사용자 고유값)를 가져올 수 있음
+            # 결과에서 해당 토큰의 username(사용자 고유값)를 가져올 수 있음
             url = 'https://graph.facebook.com/debug_token'
             params = {
                 'input_token': token,
@@ -97,14 +97,14 @@ class FacebookBackend:
             :return: get_or_create의 결과 tuple (User instance, Bool(created))
             """
             # 받아온 정보 중 회원가입에 필요한 요소들 꺼내기
-            facebook_user_id = user_info['id']
+            facebook_username = user_info['id']
             first_name = user_info['first_name']
             last_name = user_info['last_name']
             url_img_profile = user_info['picture']['data']['url']
 
-            # facebook_user_id가 username인 User를 기준으로 가져오거나 새로 생성
+            # facebook_username가 username인 User를 기준으로 가져오거나 새로 생성
             return User.objects.get_or_create(
-                username=facebook_user_id,
+                username=facebook_username,
                 defaults={
                     'first_name': first_name,
                     'last_name': last_name,
@@ -116,15 +116,15 @@ class FacebookBackend:
         user, user_created = create_user_from_facebook_user_info(user_info)
         return user
 
-    def get_user(self, user_id):
+    def get_user(self, username):
         """
-        user_id(primary_key값)이 주어졌을 때
+        username(primary_key값)이 주어졌을 때
         해당 User가 존재하면 반환하고, 없으면 None을 반환한다
-        :param user_id: User모델의 primary_key값
+        :param username: User모델의 primary_key값
         :return: primary_key에 해당하는 User가 존재하면 User인스턴스, 아니면 None
         """
         try:
-            return User.objects.get(pk=user_id)
+            return User.objects.get(pk=username)
         except User.DoesNotExist:
             return None
 
@@ -146,8 +146,8 @@ class SettingsBackend:
             return user
         return None
 
-    def get_user(self, user_id):
+    def get_user(self, username):
         try:
-            return User.objects.get(pk=user_id)
+            return User.objects.get(pk=username)
         except User.DoesNotExist:
             return None

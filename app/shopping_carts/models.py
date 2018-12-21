@@ -10,7 +10,7 @@ class Cart(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='carts'
+        related_name='carts',
     )
 
     product_option = models.ForeignKey(

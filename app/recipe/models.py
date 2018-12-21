@@ -6,7 +6,7 @@ class Recipe(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='recipes'
+        related_name='recipes',
     )
     name = models.CharField(max_length=200, verbose_name='레시피명')
 

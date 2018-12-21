@@ -7,24 +7,22 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    user_id = serializers.EmailField(
+    username = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())])
     password = serializers.CharField(
         max_length=12, min_length=1, allow_blank=False, write_only=True)
-    username = serializers.CharField(
+    nickname = serializers.CharField(
         max_length=20, validators=[UniqueValidator(queryset=User.objects.all())])
 
     class Meta:
         model = User
         fields = (
             'pk',
-            'user_id',
             'username',
+            'nickname',
             'password',
-            'tel_number',
+            'phone_number',
             'img_profile',
-            'introduce',
-            'site',
             'like_products',
             'carts',
             'recipes',
@@ -40,9 +38,8 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         print('안에는 뭐가들었나?', validated_data)
         User.objects.create_user(
-            user_id=validated_data['user_id'],
-            password=validated_data['password'],
             username=validated_data['username'],
+            password=validated_data['password'],
         )
 
         return validated_data

@@ -5,14 +5,9 @@ from members.exceptions import RelationNotExist, DuplicateRelationException
 
 
 class User(AbstractUser):
-
-    user_id = models.EmailField(max_length=200)
-    tel_number = models.CharField(max_length=200)
+    nickname = models.CharField(max_length=200)
+    phone_number = models.CharField(max_length=200)
     img_profile = models.ImageField(upload_to='user', blank=True)
-    introduce = models.TextField(blank=True)
-    site = models.URLField(blank=True)
-
-    store_name = models.CharField(max_length=200, blank=True)
 
     to_relation_users = models.ManyToManyField(
         'self',
@@ -22,6 +17,11 @@ class User(AbstractUser):
         related_name='from_relation_users',
         related_query_name='from_relation_user',
     )
+
+    class Meta:
+        unique_together = (
+            ('username', 'nickname'),
+        )
 
     def __str__(self):
         return self.username

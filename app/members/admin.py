@@ -14,11 +14,9 @@ class UserAdmin(BaseUserAdmin):
         }),
         ('개인정보', {
             'fields': (
-                'user_id',
-                'tel_number',
+                'nickname',
+                'phone_number',
                 'img_profile',
-                'introduce',
-                'site',
             ),
         }),
         ('권한', {

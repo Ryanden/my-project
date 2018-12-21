@@ -10,7 +10,7 @@ class SignupModelForm(forms.ModelForm):
 
 
 class SignupForm(forms.Form):
-    user_id = forms.EmailField(
+    username = forms.EmailField(
         label='아이디',
         widget=forms.EmailInput(
             attrs={
@@ -45,7 +45,7 @@ class SignupForm(forms.Form):
         )
     )
 
-    tel_number = forms.CharField(
+    phone_number = forms.CharField(
         label='전화번호',
         widget=forms.TextInput(
             attrs={
@@ -63,24 +63,7 @@ class SignupForm(forms.Form):
         ),
         required=False,
     )
-    introduce = forms.CharField(
-        label='소개',
-        widget=forms.Textarea(
-            attrs={
-                'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
-    site = forms.URLField(
-        label='사이트URL',
-        widget=forms.URLInput(
-            attrs={
-                'class': 'form-control',
-            }
-        ),
-        required=False,
-    )
+
 
     store_name = forms.CharField(
         label='스토어이름',
@@ -91,12 +74,12 @@ class SignupForm(forms.Form):
         ),
     )
 
-    def clean_user_id(self):
+    def clean_username(self):
 
-        user_id = self.cleaned_data['user_id']
-        if User.objects.filter(user_id=user_id).exists():
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
             raise ValidationError('이미 사용중인 아이디입니다')
-        return user_id
+        return username
 
     def clean_username(self):
         # username field의 clean()실행 결과가 self.cleaned_data['username']에 있음
@@ -122,13 +105,11 @@ class SignupForm(forms.Form):
         #     ...
         # }
         fields = [
-            'user_id',
+            'username',
             'username',
             'password',
-            'tel_number',
+            'phone_number',
             'img_profile',
-            'introduce',
-            'site',
             'store_name',
         ]
         create_user_dict = {}

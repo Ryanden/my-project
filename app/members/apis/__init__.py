@@ -33,6 +33,7 @@ class UserCreate(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -58,6 +59,8 @@ class AuthToken(APIView):
 
         # authenticate실행
         user = authenticate(username=username, password=password)
+
+        print(user)
 
         # authenticate가 성공한 경우
         if user:
