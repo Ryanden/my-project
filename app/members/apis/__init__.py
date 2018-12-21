@@ -15,15 +15,6 @@ class UserList(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-# class UserDetail(generics.RetrieveAPIView):
-#     def get(self, request, pk):
-#         serializer = UserSerializer(User.objects.get(pk=pk))
-#
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#     permissions = (permissions.IsAuthenticated,)
-
-
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -57,6 +48,13 @@ class UserCreate(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLogout(APIView):
+    def get(self, request, format=None):
+        # simply delete the token to force a login
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 class AuthToken(APIView):
