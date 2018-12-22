@@ -56,7 +56,6 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password'],
             nickname=validated_data['nickname'],
             phone_number=validated_data['phone_number'],
-            img_profile=validated_data['img_profile'],
         )
 
         return validated_data
