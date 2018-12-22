@@ -11,8 +11,21 @@ class MaterialSerializer(serializers.ModelSerializer):
             'name',
             'capacity',
             'cost',
-
         )
+
+    def create(self, validated_data):
+        print('안에는 뭐가들었나?', validated_data)
+
+        cost_per_one = int(validated_data['cost']) / int(validated_data['capacity'])
+
+        Material.objects.create(
+            name=validated_data['name'],
+            capacity=validated_data['capacity'],
+            cost=validated_data['cost'],
+            cost_per_one=cost_per_one,
+        )
+
+        return validated_data
 
 
 class CostCalculatorSerializer(serializers.ModelSerializer):
@@ -39,4 +52,3 @@ class ItemSerializer(serializers.ModelSerializer):
             'profit',
             'count',
         )
-
