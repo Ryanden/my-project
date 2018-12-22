@@ -34,7 +34,6 @@ class MaterialDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = MaterialSerializer
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
-        IsUserOrReadOnly,
     )
 
     def get(self, request, *args, **kwargs):

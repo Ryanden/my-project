@@ -1,9 +1,13 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from .models import CostCalculator, Material, Item
 
 
 class MaterialSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        validators=[UniqueValidator(queryset=Material.objects.all())])
+
     class Meta:
         model = Material
         fields = (
@@ -40,6 +44,7 @@ class CostCalculatorSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Item
         fields = (
