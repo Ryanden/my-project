@@ -22,14 +22,14 @@ class MaterialSerializer(serializers.ModelSerializer):
 
         cost_per_one = int(validated_data['cost']) / int(validated_data['capacity'])
 
-        Material.objects.create(
+        material = Material.objects.create(
             name=validated_data['name'],
             capacity=validated_data['capacity'],
             cost=validated_data['cost'],
             cost_per_one=cost_per_one,
         )
 
-        return validated_data
+        return material
 
 
 class CostCalculatorSerializer(serializers.ModelSerializer):
