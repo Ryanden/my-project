@@ -1,13 +1,26 @@
-from rest_framework import generics, permissions
+from django.shortcuts import get_list_or_404
+from rest_framework import generics, permissions, status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
+
 from ..models import Ingredient, IngredientsLabeling
 from ..serializers import IngredientSerializer, IngredientsLabelingSerializer
 
 
 # Ingredient api
 class IngredientList(generics.ListAPIView):
-    queryset = Ingredient.objects.all()
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return self.list(request, *args, **kwargs)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    def get_queryset(self):
+        queryset = get_list_or_404(Ingredient)
+
+        return queryset
+
     serializer_class = IngredientSerializer
 
 

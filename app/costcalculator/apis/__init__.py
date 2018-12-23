@@ -12,7 +12,6 @@ from ..permission import IsUserOrReadOnly
 
 
 # material api
-
 class MaterialList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
