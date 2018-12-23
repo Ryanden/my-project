@@ -1,62 +1,71 @@
-from rest_framework import generics, permissions
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.models import Token
+from django.shortcuts import get_list_or_404
+from rest_framework import generics, permissions, status
+from rest_framework.exceptions import NotAuthenticated
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from ..models import QualityTest, TestInstitution
 from ..serializers import QualityTestSerializer, TestInstitutionSerializer
+from ..permission import IsUserOrReadOnly
 
 
 # quality_test api
 class QualityTestList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            return self.list(request, *args, **kwargs)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = QualityTest.objects.filter(user=self.request.user)
+        queryset = get_list_or_404(QualityTest)
 
         return queryset
 
     serializer_class = QualityTestSerializer
 
 
-# class QualityTestList(generics.ListAPIView):
-#     queryset = QualityTest.objects.all()
-#     serializer_class = QualityTestSerializer
-
-
-class QualityTestDetail(generics.RetrieveAPIView):
+class QualityTestDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = QualityTest.objects.all()
     serializer_class = QualityTestSerializer
-
-
-class QualityTestCreate(generics.ListCreateAPIView):
-    def get_queryset(self):
-        queryset = QualityTest.objects.filter(user=self.request.user)
-
-        return queryset
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+    )
 
     def get(self, request, *args, **kwargs):
-        print(self.request.user)
-        return self.list(request, *args, **kwargs)
+        return self.retrieve(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-        return self.create(request, *args, **kwargs)
-
-    serializer_class = QualityTestSerializer
-    permissions = (permissions.IsAuthenticated,)
-
-
-class QualityTestPatch(generics.UpdateAPIView):
+class QualityTestCreate(APIView):
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsUserOrReadOnly,
+        # IsAuthenticated,
+    )
     queryset = QualityTest.objects.all()
     serializer_class = QualityTestSerializer
 
+    def get(self, request):
+        if request.user.is_authenticated:
+            return Response(QualityTestSerializer().data)
+        raise NotAuthenticated('인증안됨')
 
-class QualityTestDelete(generics.DestroyAPIView):
-    queryset = QualityTest.objects.all()
-    serializer_class = QualityTestSerializer
+    def post(self, request):
+        serializer = QualityTestSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TestInstitutionList(generics.ListAPIView):

@@ -123,11 +123,14 @@ class CostCalculatorCreate(APIView):
         if request.user.is_authenticated:
             user = User.objects.get(username=request.user)
 
+            item = Item.objects.get(pk=request.data['item_pk'])
+
             material = Material.objects.get(name=request.data['material'])
 
             calculator = CostCalculator.objects.create(
                 user=user,
                 material=material,
+                item=item,
                 usage=int(request.data['usage']),
             )
 

@@ -51,4 +51,11 @@ class CostCalculator(models.Model):
         verbose_name='재료'
     )
 
+    item = models.ForeignKey(
+        Item,
+        on_delete=models.CASCADE,
+        related_name='calculators',
+        verbose_name='제품'
+    )
+
     usage = models.PositiveIntegerField(default=1)

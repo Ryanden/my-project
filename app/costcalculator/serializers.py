@@ -15,6 +15,7 @@ class MaterialSerializer(serializers.ModelSerializer):
             'name',
             'capacity',
             'cost',
+            'cost_per_one',
         )
 
     def create(self, validated_data):
@@ -39,6 +40,7 @@ class CostCalculatorSerializer(serializers.ModelSerializer):
             'pk',
             'user',
             'material',
+            'item',
             'usage',
         )
 
