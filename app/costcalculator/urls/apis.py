@@ -6,6 +6,7 @@ urlpatterns = [
     path('', apis.CostCalculatorList.as_view()),
     path('<int:pk>/', apis.CostCalculatorDetail.as_view()),
     path('create/', apis.CostCalculatorCreate.as_view()),
+    path('info/', apis.CostCalculatorInfoList.as_view()),
     path('item/', apis.ItemList.as_view()),
     path('item/<int:pk>/', apis.ItemDetail.as_view()),
     path('item/create/', apis.ItemCreate.as_view()),

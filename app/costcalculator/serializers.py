@@ -34,6 +34,9 @@ class MaterialSerializer(serializers.ModelSerializer):
 
 
 class CostCalculatorSerializer(serializers.ModelSerializer):
+
+    material = MaterialSerializer()
+
     class Meta:
         model = CostCalculator
         fields = (
