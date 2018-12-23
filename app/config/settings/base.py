@@ -137,9 +137,8 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = (
     'ryanden.kr',
-    'http://webaker-deploy.s3-website.ap-northeast-2.amazonaws.com/',
+    'http://webaker-deploy.s3-website.ap-northeast-2.amazonaws.com',
     'localhost:4200',
-    'localhost:8080',
 )
 
 ROOT_URLCONF = 'config.urls'
