@@ -79,9 +79,6 @@ class CostCalculatorList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-
-
-
         queryset = get_list_or_404(CostCalculator, user=self.request.user)
 
         return queryset
@@ -91,11 +88,9 @@ class CostCalculatorList(generics.ListAPIView):
 
 # calculator info 받아오기
 class CostCalculatorInfoList(generics.ListAPIView):
-
     serializer_class = CostCalculatorSerializer
 
     def get_queryset(self):
-
         queryset = CostCalculator.objects.all()
 
         cal_pk = self.request.query_params.get('cal_pk', None)
@@ -218,5 +213,3 @@ class ItemCreate(APIView):
 
             return Response(ItemSerializer(item).data, status=status.HTTP_201_CREATED)
         raise NotAuthenticated('인증안됨')
-
-

@@ -37,9 +37,15 @@ class UserSerializer(serializers.ModelSerializer):
             print('user_name 은 보내지말것')
             return instance
 
-        instance.nickname = validated_data.get('nickname')
-        instance.phone_number = validated_data.get('phone_number')
-        instance.img_profile = validated_data.get('img_profile')
+        if validated_data.get('phone_number'):
+            instance.phone_number = validated_data.get('phone_number')
+
+        if validated_data.get('img_profile'):
+            instance.img_profile = validated_data.get('img_profile')
+
+        if validated_data.get('nickname'):
+            instance.nickname = validated_data.get('nickname')
+
         instance.save()
         return instance
 
