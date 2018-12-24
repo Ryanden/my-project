@@ -48,25 +48,38 @@ class IngredientDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class IngredientCreate(APIView):
-    permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
-        IsUserOrReadOnly,
-        # IsAuthenticated,
-    )
+    permission_classes = (IsAuthenticated,)
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
 
     def get(self, request):
+
         if request.user.is_authenticated:
             return Response(IngredientSerializer().data)
         raise NotAuthenticated('인증안됨')
 
     def post(self, request):
-        serializer = IngredientSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.user.is_authenticated:
+            ingredients_labeling = IngredientsLabeling.objects.get(pk=request.data['ingredients_labeling_pk'])
+
+            ingredient = Ingredient.objects.create(
+                ingredients_labeling=ingredients_labeling,
+                name=request.data['name'],
+                calorie=request.data['calorie'],
+                capacity=request.data['capacity'],
+                sodium=request.data['sodium'],
+                carbohydrate=request.data['carbohydrate'],
+                sugars=request.data['sugars'],
+                fat=request.data['fat'],
+                trans_fatty_acid=request.data['trans_fatty_acid'],
+                saturated_fatty_acid=request.data['saturated_fatty_acid'],
+                cholesterol=request.data.get('cholesterol'),
+                protein=request.data.get('protein'),
+            )
+
+            return Response(IngredientSerializer(ingredient).data, status=status.HTTP_201_CREATED)
+        raise NotAuthenticated('인증안됨')
 
 
 # Ingredients Labeling api
@@ -120,10 +133,6 @@ class IngredientsLabelingCreate(APIView):
 
         if request.user.is_authenticated:
             user = User.objects.get(username=request.user)
-
-            # item = Item.objects.get(pk=request.data['item_pk'])
-            #
-            # material = Material.objects.get(name=request.data['material'])
 
             ingredient_labeling = IngredientsLabeling.objects.create(
                 user=user,
