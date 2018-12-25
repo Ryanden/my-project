@@ -21,6 +21,7 @@ class MaterialList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
+
         queryset = get_list_or_404(Material)
 
         return queryset
@@ -163,7 +164,8 @@ class ItemList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = get_list_or_404(Item, user=self.request.user)
+
+        queryset = Item.objects.filter(user=self.request.user)
 
         return queryset
 
