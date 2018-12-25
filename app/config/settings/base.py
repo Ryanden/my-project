@@ -138,6 +138,7 @@ MIDDLEWARE = [
 CORS_ORIGIN_WHITELIST = (
     'ryanden.kr',
     'webaker-deploy.s3-website.ap-northeast-2.amazonaws.com',
+    'webake2.s3-website.ap-northeast-2.amazonaws.com',
     'localhost:4200',
 )
 
