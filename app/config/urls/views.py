@@ -12,6 +12,7 @@ urlpatterns = [
     path('calculator/', include('costcalculator.urls.views')),
     path('options/', include('product_options.urls.views')),
     path('store/', include('stores.urls.views')),
+    path('company/', include('quality_test.urls.views')),
     path('', views.index, name='index')
 
 ]
