@@ -60,6 +60,8 @@ class Crawler:
 
             if li.select_one('span.price em span') is not None:
                 price = li.select_one('span.price em span').get_text(strip=True)
+                if li.select_one('span.price em span').get_text(strip=True) == '최저':
+                    price = li.select_one('span.price em span:nth-of-type(2)').get_text(strip=True)
 
                 cls.res_dict['price'] = price
 
