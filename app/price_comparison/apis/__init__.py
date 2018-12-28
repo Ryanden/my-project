@@ -34,8 +34,8 @@ class Crawler:
 
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
-
-        driver = webdriver.Chrome('price_comparison/driver/chromedriver')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome('price_comparison/driver/chromedriver', chrome_options=chrome_options)
 
         url = f'https://search.shopping.naver.com/search/all.nhn?query={keyword}'
 
@@ -63,9 +63,9 @@ class Crawler:
 
                 cls.res_dict['price'] = price
 
-            # if li.select_one('img') is not None:
-            #     image = li.select_one('img').get('src')
-            #     cls.res_dict['image'] = image
+                # if li.select_one('img') is not None:
+                #     image = li.select_one('img').get('src')
+                #     cls.res_dict['image'] = image
 
                 cls.res_list.append(cls.res_dict.copy())
         driver.close()
@@ -79,7 +79,6 @@ class SearchItemList(APIView):
 
     def get(self, request):
         if request.user.is_authenticated:
-
             Crawler.res_list.clear()
             Crawler.get_data(request.query_params.get('keyword'))
 
