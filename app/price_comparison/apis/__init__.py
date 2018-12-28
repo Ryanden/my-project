@@ -1,20 +1,20 @@
 from django.shortcuts import get_list_or_404
 from rest_framework import generics, permissions, status
 from rest_framework.exceptions import NotAuthenticated
+
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from members.models import User
-from recipe.models import Recipe
-from ..models import QualityTest, TestInstitution
-from ..serializers import QualityTestSerializer, TestInstitutionSerializer
+from ..models import BookMark
+from ..serializers import BookMarkSerializer
 from ..permission import IsUserOrReadOnly
 
 
-# quality_test api
-class QualityTestList(generics.ListAPIView):
+# recipe api
+class BookMarkList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, *args, **kwargs):
@@ -23,17 +23,16 @@ class QualityTestList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = QualityTest.objects.filter(user=self.request.user)
+        queryset = get_list_or_404(BookMark, user=self.request.user)
 
         return queryset
 
-    serializer_class = QualityTestSerializer
+    serializer_class = BookMarkSerializer
 
 
-# 레시피와 업체를 선정하여 자가품질 검사 신청
-class QualityTestDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = QualityTest.objects.all()
-    serializer_class = QualityTestSerializer
+class BookMarkDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = BookMark.objects.all()
+    serializer_class = BookMarkSerializer
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
         IsUserOrReadOnly,
@@ -51,15 +50,18 @@ class QualityTestDetail(generics.RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class QualityTestCreate(APIView):
+class BookMarkCreate(APIView):
     permission_classes = (IsAuthenticated,)
-    queryset = QualityTest.objects.all()
-    serializer_class = QualityTestSerializer
+    queryset = BookMark.objects.all()
+    serializer_class = BookMarkSerializer
 
     def get(self, request):
-
+        # URL: /api/users/profile/
+        # request.user가 인증되어 있으면
+        #   UserSerializer로 serialize한 결과를 리턴
+        # 인증 안되어있으면 NotAuthenticated예외 발생
         if request.user.is_authenticated:
-            return Response(QualityTestSerializer().data)
+            return Response(BookMarkSerializer().data)
         raise NotAuthenticated('인증안됨')
 
     def post(self, request):
@@ -67,20 +69,14 @@ class QualityTestCreate(APIView):
         if request.user.is_authenticated:
             user = User.objects.get(username=request.user)
 
-            recipe = Recipe.objects.get(pk=request.data['recipe_pk'])
-
-            institution = TestInstitution.objects.get(pk=request.data['institution_pk'])
-
-            quality_test = QualityTest.objects.create(
+            recipe = BookMark.objects.create(
                 user=user,
-                recipe=recipe,
-                institution=institution,
+                name=request.data['name'],
+                link=request.data['link'],
+                price=request.data['price'],
+                image=request.data['image'],
+
             )
 
-            return Response(QualityTestSerializer(quality_test).data, status=status.HTTP_201_CREATED)
+            return Response(BookMarkSerializer(recipe).data, status=status.HTTP_201_CREATED)
         raise NotAuthenticated('인증안됨')
-
-
-class TestInstitutionList(generics.ListAPIView):
-    queryset = TestInstitution.objects.all()
-    serializer_class = TestInstitutionSerializer

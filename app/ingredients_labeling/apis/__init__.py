@@ -137,16 +137,16 @@ class IngredientsLabelingCreate(APIView):
             ingredient_labeling = IngredientsLabeling.objects.create(
                 user=user,
                 name=request.data['name'],
-                original_weight=request.data['original_weight'],
-                product_weight=request.data['product_weight'],
-                weight_change_rate=request.data['weight_change_rate'],
-                total_weight=request.data['total_weight'],
-                total_unit_count=request.data['total_unit_count'],
-                single_unit_capacity=request.data['single_unit_capacity'],
-                unit_type=request.data['unit_type'],
-                unit_count_type=request.data['unit_count_type'],
-                specific_gravity=request.data.get('specific_gravity'),
-                gravity_weight=request.data.get('gravity_weight'),
+                # original_weight=request.data['original_weight'],
+                # product_weight=request.data['product_weight'],
+                # weight_change_rate=request.data['weight_change_rate'],
+                # total_weight=request.data['total_weight'],
+                # total_unit_count=request.data['total_unit_count'],
+                # single_unit_capacity=request.data['single_unit_capacity'],
+                # unit_type=request.data['unit_type'],
+                # unit_count_type=request.data['unit_count_type'],
+                # specific_gravity=request.data.get('specific_gravity'),
+                # gravity_weight=request.data.get('gravity_weight'),
             )
 
             return Response(IngredientsLabelingSerializer(ingredient_labeling).data, status=status.HTTP_201_CREATED)

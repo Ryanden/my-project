@@ -7,5 +7,4 @@ urlpatterns = [
     path('<int:pk>/', apis.QualityTestDetail.as_view()),
     path('create/', apis.QualityTestCreate.as_view()),
     path('institution/', apis.TestInstitutionList.as_view()),
-    path('institution/create/', apis.TestInstitutionCreate.as_view()),
 ]

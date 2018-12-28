@@ -36,7 +36,7 @@ class IngredientsLabeling(models.Model):
     single_unit_capacity = models.PositiveIntegerField(default=0, verbose_name='단위내용량')
 
     # ml 인지 g 인지
-    unit_type = models.CharField(max_length=2, choices=CHOICES_UNIT_TYPE, verbose_name='단위')
+    unit_type = models.CharField(max_length=2, default='g',  choices=CHOICES_UNIT_TYPE, verbose_name='단위')
 
     # 세는 단위
     unit_count_type = models.CharField(max_length=200, default='1개', verbose_name='세는 단위')
