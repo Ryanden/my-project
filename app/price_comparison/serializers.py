@@ -12,6 +12,5 @@ class BookMarkSerializer(serializers.ModelSerializer):
             'name',
             'link',
             'price',
-            'image',
         )
 
