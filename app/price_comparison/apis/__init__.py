@@ -30,6 +30,11 @@ class Crawler:
     @classmethod
     def get_data(cls, keyword):
 
+        chrome_options = webdriver.ChromeOptions()
+
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--no-sandbox')
+
         driver = webdriver.Chrome('price_comparison/driver/chromedriver')
 
         url = f'https://search.shopping.naver.com/search/all.nhn?query={keyword}'
