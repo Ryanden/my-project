@@ -12,7 +12,6 @@ from ..models import BookMark
 from ..serializers import BookMarkSerializer
 from ..permission import IsUserOrReadOnly
 
-import os
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
@@ -158,8 +157,6 @@ class BookMarkCreate(APIView):
                 name=request.data['name'],
                 link=request.data['link'],
                 price=request.data['price'],
-                image=request.data['image'],
-
             )
 
             return Response(BookMarkSerializer(recipe).data, status=status.HTTP_201_CREATED)
