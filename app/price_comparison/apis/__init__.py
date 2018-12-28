@@ -12,8 +12,92 @@ from ..models import BookMark
 from ..serializers import BookMarkSerializer
 from ..permission import IsUserOrReadOnly
 
+import os
+from bs4 import BeautifulSoup
+from selenium import webdriver
+import time
 
-# recipe api
+
+# 크롤러
+class Crawler:
+    res_dict = {
+        'name': '',
+        'link': '',
+        'price': '',
+    }
+
+    res_list = []
+
+    @classmethod
+    def get_data(cls, keyword):
+
+        driver = webdriver.Chrome('price_comparison/driver/chromedriver')
+
+        url = f'https://search.shopping.naver.com/search/all.nhn?query={keyword}'
+
+        driver.get(url)
+
+        time.sleep(10)
+
+        html = driver.page_source
+
+        soup = BeautifulSoup(html, 'lxml')
+
+        ul_contents = soup.select("ul.goods_list li")
+
+        for li in ul_contents:
+
+            if li.select_one('div.info a') is not None:
+                name = li.select_one('div.info a').get_text(strip=True)
+
+                link = li.select_one('div.info a').get('href')
+                cls.res_dict['name'] = name
+                cls.res_dict['link'] = link
+
+            if li.select_one('span.price em span') is not None:
+                price = li.select_one('span.price em span').get_text(strip=True)
+
+                cls.res_dict['price'] = price
+
+            # if li.select_one('img') is not None:
+            #     image = li.select_one('img').get('src')
+            #     cls.res_dict['image'] = image
+
+                cls.res_list.append(cls.res_dict.copy())
+        driver.close()
+
+
+# bookmark api
+class SearchItemList(APIView):
+    permission_classes = (IsAuthenticated,)
+    queryset = BookMark.objects.all()
+    serializer_class = BookMarkSerializer
+
+    def get(self, request):
+        if request.user.is_authenticated:
+
+            Crawler.res_list.clear()
+            Crawler.get_data(request.query_params.get('keyword'))
+
+            return Response(Crawler.res_list)
+        raise NotAuthenticated('인증안됨')
+
+    def post(self, request):
+
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
+
+            recipe = BookMark.objects.create(
+                user=user,
+                name=request.data['name'],
+                link=request.data['link'],
+                price=request.data['price'],
+            )
+
+            return Response(BookMarkSerializer(recipe).data, status=status.HTTP_201_CREATED)
+        raise NotAuthenticated('인증안됨')
+
+
 class BookMarkList(generics.ListAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
