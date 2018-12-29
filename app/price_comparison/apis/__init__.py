@@ -41,8 +41,6 @@ class Crawler:
 
         driver.get(url)
 
-        time.sleep(10)
-
         html = driver.page_source
 
         soup = BeautifulSoup(html, 'lxml')
@@ -67,8 +65,7 @@ class Crawler:
 
                 # if li.select_one('img') is not None:
                 #     image = li.select_one('img').get('src')
-                #     cls.res_dict['image'] = image
-
+                    # cls.res_dict['image'] = image
                 cls.res_list.append(cls.res_dict.copy())
         driver.close()
 
