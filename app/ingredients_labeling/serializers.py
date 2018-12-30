@@ -3,26 +3,6 @@ from rest_framework import serializers
 from .models import Ingredient, IngredientsLabeling
 
 
-class IngredientsLabelingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = IngredientsLabeling
-        fields = (
-            'pk',
-            'user',
-            'name',
-            'original_weight',
-            'product_weight',
-            'weight_change_rate',
-            'total_weight',
-            'total_unit_count',
-            'single_unit_capacity',
-            'unit_type',
-            'unit_count_type',
-            'specific_gravity',
-            'date',
-        )
-
-
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
@@ -40,4 +20,28 @@ class IngredientSerializer(serializers.ModelSerializer):
             'saturated_fatty_acid',
             'cholesterol',
             'protein',
+        )
+
+
+class IngredientsLabelingSerializer(serializers.ModelSerializer):
+
+    ingredients = IngredientSerializer()
+
+    class Meta:
+        model = IngredientsLabeling
+        fields = (
+            'pk',
+            'user',
+            'name',
+            'original_weight',
+            'product_weight',
+            'weight_change_rate',
+            'total_weight',
+            'total_unit_count',
+            'single_unit_capacity',
+            'unit_type',
+            'unit_count_type',
+            'specific_gravity',
+            'date',
+            'ingredients',
         )
