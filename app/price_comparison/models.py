@@ -10,7 +10,7 @@ class BookMark(models.Model):
     )
     name = models.CharField(max_length=200, verbose_name='제품명')
 
-    link = models.CharField(max_length=200, verbose_name='제품링크')
+    link = models.CharField(max_length=1000, verbose_name='제품링크')
 
     price = models.CharField(max_length=200,verbose_name='제품가격')
 
