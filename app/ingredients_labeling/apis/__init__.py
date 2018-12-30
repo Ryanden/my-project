@@ -99,6 +99,23 @@ class IngredientsLabelingList(generics.ListAPIView):
     serializer_class = IngredientsLabelingSerializer
 
 
+# calculator info 받아오기
+class LabelingInfoList(generics.ListAPIView):
+    serializer_class = IngredientSerializer
+
+    def get_queryset(self):
+        queryset = Ingredient.objects.all()
+
+        in_pk = self.request.query_params.get('in_pk', None)
+
+        print(in_pk)
+
+        if in_pk is not None:
+            queryset = queryset.filter(ingredients_labeling__pk=in_pk)
+
+        return queryset
+
+
 class IngredientsLabelingDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = IngredientsLabeling.objects.all()
     serializer_class = IngredientsLabelingSerializer
