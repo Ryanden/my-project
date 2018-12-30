@@ -1,5 +1,3 @@
-from datetime import timezone
-
 from django.db import models
 from members.models import User
 
@@ -38,7 +36,7 @@ class IngredientsLabeling(models.Model):
     single_unit_capacity = models.PositiveIntegerField(default=0, verbose_name='단위내용량')
 
     # ml 인지 g 인지
-    unit_type = models.CharField(max_length=2, default='g',  choices=CHOICES_UNIT_TYPE, verbose_name='단위')
+    unit_type = models.CharField(max_length=2, default='g', choices=CHOICES_UNIT_TYPE, verbose_name='단위')
 
     # 세는 단위
     unit_count_type = models.CharField(max_length=200, default='1개', verbose_name='세는 단위')
@@ -51,12 +49,6 @@ class IngredientsLabeling(models.Model):
 
     # 만들어진 날짜
     date = models.DateField(auto_now_add=True)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.date = timezone.now()
-        self.modified = timezone.now()
-        return super(IngredientsLabeling, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
