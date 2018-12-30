@@ -19,6 +19,7 @@ class IngredientsLabelingSerializer(serializers.ModelSerializer):
             'unit_type',
             'unit_count_type',
             'specific_gravity',
+            'date',
         )
 
 

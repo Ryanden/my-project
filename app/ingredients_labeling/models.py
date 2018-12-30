@@ -1,3 +1,5 @@
+from datetime import timezone
+
 from django.db import models
 from members.models import User
 
@@ -49,6 +51,12 @@ class IngredientsLabeling(models.Model):
 
     # 만들어진 날짜
     date = models.DateField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.date = timezone.now()
+        self.modified = timezone.now()
+        return super(IngredientsLabeling, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
