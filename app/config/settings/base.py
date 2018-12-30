@@ -140,6 +140,8 @@ CORS_ORIGIN_WHITELIST = (
     'ryanden.kr',
     'webaker-deploy.s3-website.ap-northeast-2.amazonaws.com',
     'webake2.s3-website.ap-northeast-2.amazonaws.com',
+    'www.webaker.co.kr',
+    'webaker.co.kr',
     'localhost:4200',
 )
 
