@@ -47,6 +47,9 @@ class IngredientsLabeling(models.Model):
     # 무게
     gravity_weight = models.PositiveIntegerField(default=0, verbose_name='무게')
 
+    # 만들어진 날짜
+    date = models.DateField(auto_now_add=True)
+
     def __str__(self):
         return self.name
 
