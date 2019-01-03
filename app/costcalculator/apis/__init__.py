@@ -22,7 +22,7 @@ class MaterialList(generics.ListAPIView):
 
     def get_queryset(self):
 
-        queryset = get_list_or_404(Material)
+        queryset = Material.objects.filter(user=self.request.user)
 
         return queryset
 
@@ -49,25 +49,37 @@ class MaterialDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class MaterialCreate(APIView):
-    permission_classes = (
-        permissions.IsAuthenticatedOrReadOnly,
-        IsUserOrReadOnly,
-        # IsAuthenticated,
-    )
+    permission_classes = (IsAuthenticated,)
     queryset = Material.objects.all()
     serializer_class = MaterialSerializer
 
     def get(self, request):
+
         if request.user.is_authenticated:
             return Response(MaterialSerializer().data)
         raise NotAuthenticated('인증안됨')
 
     def post(self, request):
-        serializer = MaterialSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.user.is_authenticated:
+            user = User.objects.get(username=request.user)
+
+            cost = request.data['cost']
+
+            capacity = request.data['capacity']
+
+            cost_per_one = int(cost) / int(capacity)
+
+            material = Material.objects.create(
+                user=user,
+                name=request.data['name'],
+                capacity=capacity,
+                cost=cost,
+                cost_per_one=cost_per_one,
+            )
+
+            return Response(MaterialSerializer(material).data, status=status.HTTP_201_CREATED)
+        raise NotAuthenticated('인증안됨')
 
 
 # calculator api

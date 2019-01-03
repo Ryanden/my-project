@@ -21,7 +21,7 @@ class IngredientList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = get_list_or_404(Ingredient)
+        queryset = Ingredient.objects.filter(user=self.request.user)
 
         return queryset
 
@@ -92,14 +92,15 @@ class IngredientsLabelingList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = get_list_or_404(IngredientsLabeling)
+
+        queryset = IngredientsLabeling.objects.filter(user=self.request.user)
 
         return queryset
 
     serializer_class = IngredientsLabelingSerializer
 
 
-# calculator info 받아오기
+# labeling info 받아오기
 class LabelingInfoList(generics.ListAPIView):
     serializer_class = IngredientSerializer
 
@@ -107,8 +108,6 @@ class LabelingInfoList(generics.ListAPIView):
         queryset = Ingredient.objects.all()
 
         in_pk = self.request.query_params.get('in_pk', None)
-
-        print(in_pk)
 
         if in_pk is not None:
             queryset = queryset.filter(ingredients_labeling__pk=in_pk)

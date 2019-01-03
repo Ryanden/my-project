@@ -63,6 +63,12 @@ class Ingredient(models.Model):
         verbose_name='영양성분표'
     )
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='ingredients'
+    )
+
     name = models.CharField(max_length=200, verbose_name='이름')
 
     calorie = models.PositiveIntegerField(default=0, verbose_name='칼로리')

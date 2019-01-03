@@ -3,6 +3,12 @@ from members.models import User
 
 
 class Material(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='materials',
+    )
+
     name = models.CharField(max_length=200, verbose_name='재료명')
 
     capacity = models.PositiveIntegerField(default=0, verbose_name='용량')
