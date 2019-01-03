@@ -63,8 +63,11 @@ class IngredientCreate(APIView):
         if request.user.is_authenticated:
             ingredients_labeling = IngredientsLabeling.objects.get(pk=request.data['ingredients_labeling_pk'])
 
+            user = User.objects.get(username=request.user)
+
             ingredient = Ingredient.objects.create(
                 ingredients_labeling=ingredients_labeling,
+                user=user,
                 name=request.data['name'],
                 calorie=request.data['calorie'],
                 capacity=request.data['capacity'],
