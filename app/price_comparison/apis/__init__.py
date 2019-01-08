@@ -109,7 +109,8 @@ class BookMarkList(generics.ListAPIView):
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     def get_queryset(self):
-        queryset = get_list_or_404(BookMark, user=self.request.user)
+
+        queryset = BookMark.objects.filter(user=self.request.user)
 
         return queryset
 
