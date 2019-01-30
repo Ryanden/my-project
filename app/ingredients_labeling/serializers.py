@@ -25,7 +25,7 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 class IngredientsLabelingSerializer(serializers.ModelSerializer):
 
-    ingredients = IngredientSerializer()
+    # ingredients = IngredientSerializer()
 
     class Meta:
         model = IngredientsLabeling
@@ -43,5 +43,5 @@ class IngredientsLabelingSerializer(serializers.ModelSerializer):
             'unit_count_type',
             'specific_gravity',
             'date',
-            'ingredients',
+            # 'ingredients',
         )
