@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Ingredient, IngredientsLabeling
 
 
+# 제료
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient
@@ -23,6 +24,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         )
 
 
+# 제품
 class IngredientsLabelingSerializer(serializers.ModelSerializer):
 
     # ingredients = IngredientSerializer()
