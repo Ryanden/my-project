@@ -70,6 +70,8 @@ class MaterialCreate(APIView):
 
             cost_per_one = int(cost) / int(capacity)
 
+            print('1g가격 : ', cost_per_one)
+
             material = Material.objects.create(
                 user=user,
                 name=request.data['name'],
