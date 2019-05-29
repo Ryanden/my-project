@@ -37,6 +37,8 @@ class RelationTestCase(TransactionTestCase):
         u1 = User.objects.create_user(username='u1')
         u2 = User.objects.create_user(username='u2')
 
+
+        # follow 확인
         # u2로의 follow를 실행
         u1.follow(u2)
 
